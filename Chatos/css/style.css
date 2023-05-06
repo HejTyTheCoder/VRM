@@ -1,0 +1,208 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(255, 255, 255));
+}
+
+main {
+    width: 90%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+main.chat {
+    width: 92%;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 110px;
+}
+
+div.bubbler1 {
+    display: flex;
+    justify-content: right;
+}
+
+div.bubbler2 {
+    display: flex;
+    justify-content: left;
+}
+
+div.bubble {
+    display: flex;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin: 2px;
+    max-width: 45%;
+    overflow-wrap: anywhere;
+    justify-content: center;
+    border-radius: 25px;
+}
+
+div.bubble1 {   
+    background-color: rgb(79, 119, 253);
+}
+
+div.bubble2 {
+    background-color: rgb(234, 62, 240);
+}
+
+div.center {
+    display: flex;
+    padding-top: 300px;
+    justify-content: center;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    position: sticky;
+    padding: 5px 0 5px 0;
+    top: 0;
+    background-color: rgb(156, 18, 215);
+}
+
+nav div.left {
+    display: flex;
+    align-items: center;
+    padding-left: 18px;
+    width: 50%;
+}
+
+nav div.right {
+    display: flex;
+    width: 50%;
+    justify-content: right;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+}
+
+nav ul a {
+    padding-right: 20px;
+    text-decoration: none;
+    color: white;
+}
+
+nav ul a:hover {
+    color: rgb(61, 12, 81);
+}
+
+nav a.backArrow {
+    font-size: 2.5em;
+    text-decoration: none;
+    color:rgb(55, 12, 72);
+}
+
+nav a.backArrow:hover {
+    color: rgb(140, 18, 192);
+}
+
+div.chat {
+    height: 100px;
+    position: fixed;
+    display: flex;
+    width: 100%;
+    bottom: 0;
+    background-color: rgb(156, 18, 215);
+}
+
+div.chat form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+div.chat input {
+    height: 60%;
+    margin-right: 10px; 
+}
+
+div.chat input.message {
+    width: 100%;
+    margin-left: 10px;
+}
+
+div.chat input.sendMessage {
+    width: 60px;
+}
+
+div.error {
+    font-size: 0.8em;
+    color: rgb(230, 1, 1);
+}
+
+nav div.error {
+    position: relative;
+    right: 275px;
+    top: 27px;
+}
+
+nav form input {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25),
+    2px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+nav form input.text {
+    padding: 5px;
+    border-radius: 20px 0 0 20px;
+    border: 2px solid rgb(124, 0, 178);
+    background-color: rgb(182, 61, 234);
+}
+
+nav form input.submit {
+    position: relative;
+    right: 5px;
+    padding: 7px 7px 7px 2px;
+    color: rgb(55, 12, 72);
+    border-radius: 0 20px 20px 0;
+    border: none;   
+    background-color: rgb(124, 0, 178);
+}
+
+::-webkit-input-placeholder {
+    color: rgba(108, 66, 125, 0.608);
+}
+
+:focus::-webkit-input-placeholder {
+    border: none;
+}
+
+/*  #   */
+#navDir {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    margin: 0;
+    font-size: 1.3em;
+    justify-content: center;
+    color: rgb(61, 12, 81);
+    background-color: rgb(156, 18, 215);
+}
+
+#navDir a {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 15px;
+    top: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.7em;
+    border-radius: 50%;
+    border: none;
+    color: rgb(61, 12, 81);
+    background-color: rgb(124, 0, 178);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25),
+    2px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+#navDir a:hover {
+    font-size: 1.75em;
+    color: rgb(213, 2, 2);
+    filter: drop-shadow(0 0 5px rgb(255, 35, 35));
+}
