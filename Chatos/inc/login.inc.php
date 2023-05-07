@@ -12,7 +12,7 @@ if(isset($_POST["submit"])) {
         header("location: ../login.php?error=empty");
         exit();
     }
-    $uid = loginUser($connection, $username, $pwd);
+    $uid = loginUser($database, $username, $pwd);
 
     if($uid == false){
         header("location: ../login.php?error=login");
