@@ -12,21 +12,11 @@ if(isset($_POST["submit"])) {
         exit();
     }
     
-    $sql = "INSERT INTO messages (chat, user, message, edited) VALUES (?, ?, ?, 0);";
-    $stmt = mysqli_stmt_init($connection);
+    $database->newComplaint($_SESSION['idc'], $_SESSION['idu'], $_POST['complaint']);
 
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../complaints.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "iis", $_SESSION["idc"], $_SESSION["idu"], $_POST["complaint"]);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
+    //header("location: ../complaints.php?error=stmt");
     header("location: ../complaints.php");
-    exit();
 }
 else {
     header("location: ../complaints.php");
-    exit();
 }

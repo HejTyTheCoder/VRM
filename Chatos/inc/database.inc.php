@@ -197,6 +197,54 @@ class Database{
         */
     }
 
+    function getComplaints(){
+        $sql = "SELECT * FROM messages WHERE chat = -1 ORDER BY IDm DESC";
+        $stmt = mysqli_stmt_init($this->connection);
+        
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            throw new Exception("Failed to prepare the statement");
+        }
+        mysqli_stmt_execute($stmt);
+
+        return mysqli_stmt_get_result($stmt);
+    }
+
+    function addMessage($idc, $idu, $message){
+        $sql = "INSERT INTO messages (chat, user, message, edited) VALUES (?, ?, ?, 0);";
+        $stmt = mysqli_stmt_init($this->connection);
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            throw new Exception("Failed to prepare the statement");
+        }
+        mysqli_stmt_bind_param($stmt, "iis", $idc, $idu, $message);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+    public function newComplaint($idc, $idu, $complaint){
+        $sql = "INSERT INTO messages (chat, user, message, edited) VALUES (?, ?, ?, 0);";
+        $stmt = mysqli_stmt_init($this->connection);
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            throw new Exception("Failed to prepare the statement");
+        }
+        mysqli_stmt_bind_param($stmt, "iis", $_SESSION["idc"], $_SESSION["idu"], $_POST["complaint"]);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+    public function acceptChat($idc){
+        $sql = "UPDATE chats set accepted = 1 WHERE IDc = ?;";
+        $stmt = mysqli_stmt_init($this->connection);
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            throw new Exception("Failed to prepare the statement");
+        }
+        mysqli_stmt_bind_param($stmt, "i", $idc);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
 }
 
 ?>

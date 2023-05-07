@@ -27,16 +27,8 @@
                 ";
             }
             else {
-                $sql = "SELECT * FROM messages WHERE chat = -1 ORDER BY IDm DESC";
-                $stmt = mysqli_stmt_init($connection);
-                
-                if(!mysqli_stmt_prepare($stmt, $sql)) {
-                    header("location: ../complaints.php?error=stmt");
-                    exit();
-                }
-                mysqli_stmt_execute($stmt);
 
-                $resultData = mysqli_stmt_get_result($stmt);
+                $resultData = $database->getComplaints();
 
                 if($row = mysqli_fetch_assoc($resultData)) {
                     do {
@@ -46,7 +38,6 @@
                 else {
                     echo "There are no complaints for You admin.";
                 }
-                mysqli_stmt_close($stmt);
             }
         ?>
     </main>

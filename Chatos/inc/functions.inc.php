@@ -29,7 +29,7 @@ function querySimple($sql, $paramKeys, $params, $error) {
 
 
 
-function displayChats($connection, $accepted, Database $database) {
+function displayChats($accepted, Database $database) {
     $resultData = $database->getChatList($_SESSION("idu"), $accepted);
     $printed = 0;
     if($row = mysqli_fetch_assoc($resultData)) {
