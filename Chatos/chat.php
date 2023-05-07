@@ -18,7 +18,7 @@
 <body>
     <?php require_once "micro/navClassic.php"; ?>
     <main class="chat">
-        <?php printMessages($connection); ?>
+        <?php printMessages($connection, $database); ?>
     </main>
     <div class="chat">
         <form action="inc/sendMessage.inc.php" method="post">
