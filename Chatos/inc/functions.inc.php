@@ -64,7 +64,7 @@ function displayChats($accepted, Database $database) {
     }
 }
 
-function printMessages($connection, Database $database) {
+function printMessages(Database $database) {
     $resultData = $database->getMessages($_SESSION["idc"]);
 
     if($row = mysqli_fetch_assoc($resultData)) {
