@@ -18,7 +18,7 @@
     <main>
         <h2><?php echo $_SESSION["username"] ?></h2>
         <?php
-            displayChats($connection, 0);
+            displayChats(0, $database);
         ?>
     </main>
 </body>

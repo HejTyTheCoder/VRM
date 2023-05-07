@@ -1,4 +1,5 @@
 <?php
+include_once("dbh.inc.php");
 
 if(isset($_POST["submit"])) {
     $username = $_POST["uid"];
@@ -17,7 +18,7 @@ if(isset($_POST["submit"])) {
         header("location: ../signup.php?error=uidi");
         exit();
     }
-    if(uidExists($connection, $username)) {
+    if($database->uidExists($username)) {
         header("location: ../signup.php?error=uide");
         exit();
     }
@@ -25,7 +26,7 @@ if(isset($_POST["submit"])) {
         header("location: ../signup.php?error=emaili");
         exit();
     }
-    if(emailExists($connection, $email)) {
+    if($database->emailExists($email)) {
         header("location: ../signup.php?error=emaile");
         exit();
     }
@@ -34,7 +35,7 @@ if(isset($_POST["submit"])) {
         exit();
     }
 
-    createUser($connection, $username, $email, $pwd);
+    $database->createUser($connection, $username, $email, $pwd);
 }
 else {
     header("location: ../signup.php");

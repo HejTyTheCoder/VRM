@@ -1,5 +1,7 @@
 <?php
 
+//unused function with error
+/*
 function querySimple($sql, $paramKeys, $params, $error) {
     $sql = "";
     $stmt = mysqli_stmt_init($connection);
@@ -23,22 +25,13 @@ function querySimple($sql, $paramKeys, $params, $error) {
     }
     mysqli_stmt_close($stmt);
 }
+*/
 
-function displayChats($connection, $accepted) {
-    $sql = "SELECT users.username, chats.IDc, chats.acceptor FROM users, chats, usersxchats WHERE users.IDu = usersxchats.IDu AND usersxchats.IDc = chats.IDc 
-    AND users.IDu != ? AND (chats.applicant = ? OR chats.acceptor = ?) AND chats.accepted = ?;";
-    $stmt = mysqli_stmt_init($connection);
+
+
+function displayChats($accepted, Database $database) {
+    $resultData = $database->getChatList($_SESSION("idu"), $accepted);
     $printed = 0;
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "sssi", $_SESSION["idu"], $_SESSION["idu"], $_SESSION["idu"], $accepted);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
     if($row = mysqli_fetch_assoc($resultData)) {
         if($accepted == 1) {
             echo "<br><br>Your chats:";
@@ -69,22 +62,10 @@ function displayChats($connection, $accepted) {
             echo "<br><br>You have no chats.";
         }
     }
-    
-    mysqli_stmt_close($stmt);
 }
 
-function printMessages($connection) {
-    $sql = "SELECT * FROM messages WHERE chat = ?;";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "i", $_SESSION["idc"]);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
+function printMessages(Database $database) {
+    $resultData = $database->getMessages($_SESSION["idc"]);
 
     if($row = mysqli_fetch_assoc($resultData)) {
         do {
@@ -101,19 +82,27 @@ function printMessages($connection) {
     }
 }
 
-function loginUser($connection, $username, $pwd) {
-    if(uidExists($connection, $username)) {
-        $uid = uidExists($connection, $username);
+function loginUser(Database $database, $username, $pwd) {
+    if($database->uidExists($username)) {
+        $uid = $database->uidExists($username);
     }
-    else if(emailExists($connection, $username)) {
-        $uid = emailExists($connection, $username);
+    else if($database->emailExists($username)) {
+        $uid = $database->emailExists($username);
     }
     else {
+        return false;
+        //should not be here
+        //the location should change outside the function
+        //or throw new Exception and check for exception outside the function
+        /*
         header("location: ../login.php?error=login");
         exit();
+        */
     }
 
     if(password_verify($pwd, $uid["userPwd"])) {
+        //I think that session should be resolved outside of the function
+        /*
         session_start();
 
         $_SESSION["idu"] = $uid["IDu"];
@@ -122,124 +111,19 @@ function loginUser($connection, $username, $pwd) {
 
         header("location: ../index.php");
         exit();
-    }
-    else {
-        header("location: ../login.php?error=login");
-        exit();
-    }
-}
-
-function createUser($connection, $username, $email, $pwd) {
-    $sql = "INSERT INTO users (username, userEmail, userPwd, UserRole) VALUES (?, ?, ?, 'pleb');";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../signup.php?error=stmt");
-        exit();
-    }
-
-    $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-
-    mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashedPwd);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    
-    loginUser($connection, $username, $pwd);
-}
-
-function createChat($connection, $applicant, $acceptor) {
-    $sql = "INSERT INTO chats (applicant, acceptor, accepted) VALUES (?, ?, 'false');";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "ii", $applicant, $acceptor);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    $sql = "SELECT IDc FROM chats WHERE applicant = ? AND acceptor = ?;";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "ii", $applicant, $acceptor);
-    mysqli_stmt_execute($stmt);
-    $IDc = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
-    mysqli_stmt_close($stmt);
-
-    $sql = "INSERT INTO usersxchats (IDu, IDc) VALUES (?, ?);";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "ii", $applicant, $IDc["IDc"]);
-    mysqli_stmt_execute($stmt);
-    
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "ii", $acceptor, $IDc["IDc"]);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    header("location: ../index.php");
-    exit();
-}
-
-function deleteChat($connection, $IDc) {
-    $sql = "DELETE FROM chats WHERE IDc = ?;";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "i", $IDc);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    $sql = "DELETE FROM usersxchats WHERE IDc = ?;";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "i", $IDc);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}
-
-function chatExists($connection, $applicant, $acceptor) {
-    $sql = "SELECT * FROM chats WHERE (applicant = ? AND acceptor = ?) OR (acceptor = ? AND applicant = ?);";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "ssss", $applicant, $acceptor, $applicant, $acceptor);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    if(mysqli_fetch_assoc($resultData)) {
-        return true;
+        */
+        return $uid;
     }
     else {
         return false;
+        //should be resolved outside the function
+        /*
+        header("location: ../login.php?error=login");
+        exit();
+        */
     }
-    mysqli_stmt_close($stmt);
 }
+
 
 function pwdMatch($pwd, $pwd2) {
     if($pwd != $pwd2) {
@@ -284,46 +168,4 @@ function invalidUid($username) {
     }
 }
 
-function emailExists($connection, $email) {
-    $sql = "SELECT * FROM users WHERE userEmail = ?;";
-    $stmt = mysqli_stmt_init($connection);
 
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../signup.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    if($row = mysqli_fetch_assoc($resultData)) {
-        return $row;
-    }
-    else {
-        return false;
-    }
-    mysqli_stmt_close($stmt);
-}
-
-function uidExists($connection, $username) {
-    $sql = "SELECT * FROM users WHERE username = ?;";
-    $stmt = mysqli_stmt_init($connection);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../signup.php?error=stmt");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, "s", $username);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    if($row = mysqli_fetch_assoc($resultData)) {
-        return $row;
-    }
-    else {
-        return false;
-    }
-    mysqli_stmt_close($stmt);
-}

@@ -5,16 +5,15 @@ session_start();
 if(isset($_POST["submit"])) {
 
     require_once "dbh.inc.php";
-    require_once "functions.inc.php";
 
-    if(uidExists($connection, $_POST["uid"])) {
+    if($database->uidExists($_POST["uid"])) {
 
-        $uid = uidExists($connection, $_POST["uid"]);
+        $uid = $database->uidExists($_POST["uid"]);
         $applicant = $_SESSION["idu"];
         $acceptor = $uid["IDu"];
 
-        if(!chatExists($connection, $applicant, $acceptor)) {
-            createChat($connection, $applicant, $acceptor);
+        if(!$database->chatExists($applicant, $acceptor)) {
+            $database->createChat($applicant, $acceptor);
         }
         else {
             header("location: ../index.php?error=chate");

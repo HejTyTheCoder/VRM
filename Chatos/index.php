@@ -55,7 +55,7 @@
                 }
                 else {
                     echo "Hi " . $_SESSION["username"] . ".";
-                    displayChats($connection, 1);
+                    displayChats(1, $database);
                 }
             ?>
         </p>
