@@ -1,0 +1,187 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 09, 2023 at 04:55 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Database: `chatos`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chatgroups`
+--
+
+CREATE TABLE `chatgroups` (
+  `idc` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `directchat` tinyint(1) NOT NULL DEFAULT 1,
+  `description` varchar(3600) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invitations`
+--
+
+CREATE TABLE `invitations` (
+  `idi` int(11) NOT NULL,
+  `sender` int(11) NOT NULL,
+  `idu` int(11) NOT NULL,
+  `idc` int(11) NOT NULL,
+  `text` varchar(3600) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `idm` int(11) NOT NULL,
+  `idu` int(11) NOT NULL,
+  `idc` int(11) NOT NULL,
+  `text` text NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userchatgroups`
+--
+
+CREATE TABLE `userchatgroups` (
+  `iduc` int(11) NOT NULL,
+  `idu` int(11) NOT NULL,
+  `idc` int(11) NOT NULL,
+  `authority` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `idu` int(11) NOT NULL,
+  `nickname` varchar(30) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `authority` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `description` varchar(3600) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `chatgroups`
+--
+ALTER TABLE `chatgroups`
+  ADD PRIMARY KEY (`idc`);
+
+--
+-- Indexes for table `invitations`
+--
+ALTER TABLE `invitations`
+  ADD PRIMARY KEY (`idi`),
+  ADD KEY `cons_inv_us2` (`idu`),
+  ADD KEY `cons_inv_chat` (`idc`),
+  ADD KEY `cons_inv_us1` (`sender`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`idm`),
+  ADD KEY `cons_mes_chat` (`idc`),
+  ADD KEY `cons_mes_us` (`idu`);
+
+--
+-- Indexes for table `userchatgroups`
+--
+ALTER TABLE `userchatgroups`
+  ADD PRIMARY KEY (`iduc`),
+  ADD KEY `cons_us_chat` (`idc`),
+  ADD KEY `cons_us_us` (`idu`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`idu`),
+  ADD UNIQUE KEY `nickname` (`nickname`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `chatgroups`
+--
+ALTER TABLE `chatgroups`
+  MODIFY `idc` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `invitations`
+--
+ALTER TABLE `invitations`
+  MODIFY `idi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `idm` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `userchatgroups`
+--
+ALTER TABLE `userchatgroups`
+  MODIFY `iduc` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `idu` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `invitations`
+--
+ALTER TABLE `invitations`
+  ADD CONSTRAINT `cons_inv_chat` FOREIGN KEY (`idc`) REFERENCES `chatgroups` (`idc`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cons_inv_us1` FOREIGN KEY (`sender`) REFERENCES `users` (`idu`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cons_inv_us2` FOREIGN KEY (`idu`) REFERENCES `users` (`idu`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `cons_mes_chat` FOREIGN KEY (`idc`) REFERENCES `chatgroups` (`idc`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cons_mes_us` FOREIGN KEY (`idu`) REFERENCES `users` (`idu`);
+
+--
+-- Constraints for table `userchatgroups`
+--
+ALTER TABLE `userchatgroups`
+  ADD CONSTRAINT `cons_us_chat` FOREIGN KEY (`idc`) REFERENCES `chatgroups` (`idc`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cons_us_us` FOREIGN KEY (`idu`) REFERENCES `users` (`idu`) ON DELETE CASCADE;
+COMMIT;
