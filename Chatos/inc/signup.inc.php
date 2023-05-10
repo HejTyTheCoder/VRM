@@ -18,16 +18,8 @@ if(isset($_POST["submit"])) {
         header("location: ../signup.php?error=uidi");
         exit();
     }
-    if($database->uidExists($username)) {
+    if($database->userExists($username)) {
         header("location: ../signup.php?error=uide");
-        exit();
-    }
-    if(invalidEmail($email)) {
-        header("location: ../signup.php?error=emaili");
-        exit();
-    }
-    if($database->emailExists($email)) {
-        header("location: ../signup.php?error=emaile");
         exit();
     }
     if(pwdMatch($pwd, $pwd2)) {
@@ -35,7 +27,8 @@ if(isset($_POST["submit"])) {
         exit();
     }
 
-    $database->createUser($connection, $username, $email, $pwd);
+    $database->createUser($username, $pwd);
+    header("location: ../");
 }
 else {
     header("location: ../signup.php");

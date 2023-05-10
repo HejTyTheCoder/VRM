@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if(isset($_POST["submit"])) {
     
     $username = $_POST["uid"];
@@ -18,9 +18,8 @@ if(isset($_POST["submit"])) {
         header("location: ../login.php?error=login");
     }
 
-    $_SESSION["idu"] = $uid["IDu"];
-    $_SESSION["username"] = $uid["username"];
-    $_SESSION["role"] = $uid["role"];
+    $_SESSION["username"] = $username;
+    header("location: ../");
 }
 else {
     header("location: ../login.php");

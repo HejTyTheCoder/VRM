@@ -83,45 +83,10 @@ function printMessages(Database $database) {
 }
 
 function loginUser(Database $database, $username, $pwd) {
-    if($database->uidExists($username)) {
-        $uid = $database->uidExists($username);
+    if($database->loginUser($username, $pwd)){
+        return true;
     }
-    else if($database->emailExists($username)) {
-        $uid = $database->emailExists($username);
-    }
-    else {
-        return false;
-        //should not be here
-        //the location should change outside the function
-        //or throw new Exception and check for exception outside the function
-        /*
-        header("location: ../login.php?error=login");
-        exit();
-        */
-    }
-
-    if(password_verify($pwd, $uid["userPwd"])) {
-        //I think that session should be resolved outside of the function
-        /*
-        session_start();
-
-        $_SESSION["idu"] = $uid["IDu"];
-        $_SESSION["username"] = $uid["username"];
-        $_SESSION["role"] = $uid["role"];
-
-        header("location: ../index.php");
-        exit();
-        */
-        return $uid;
-    }
-    else {
-        return false;
-        //should be resolved outside the function
-        /*
-        header("location: ../login.php?error=login");
-        exit();
-        */
-    }
+    return false;
 }
 
 
