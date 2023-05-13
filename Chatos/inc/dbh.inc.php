@@ -1,3 +1,3 @@
 <?php
-require_once("database.inc.php");
+require_once("classes/database.inc.php");
 $database = new Database();
