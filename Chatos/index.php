@@ -14,11 +14,10 @@
     <title>Chatos</title>
 </head>
 <body>
-    <div id="navDir">
-        <?php if(isset($_SESSION["username"])) echo "<a href='complaints.php'>!</a>"; ?>
-        <h1>CHATOS</h1>
-    </div>
+   
     <nav>
+         <?php if(isset($_SESSION["username"])) echo "<a href='complaints.php'>!</a>"; ?>
+        <h1 id="logo" >CHATOS</h1>
         <div class="left">
             <?php
                 if(isset($_SESSION["username"])) {
@@ -36,12 +35,12 @@
             <ul>
                 <?php
                     if(isset($_SESSION["username"])) {
-                        echo "<li><a href='profile.php'>Profile</a></li>";
-                        echo "<li><a href='inc/logout.inc.php'>Log Out</a></li>";  
+                        echo "<li><a href='profile.php' class='link'>Profile</a></li>";
+                        echo "<li><a href='inc/logout.inc.php' class='link'>Log Out</a></li>";  
                     }
                     else {
-                        echo "<li><a href='signup.php'>Sign Up</a></li>"; 
-                        echo "<li><a href='login.php'>Log In</a></li>";                        
+                        echo "<li><a href='signup.php' class='link' >Sign Up</a></li>"; 
+                        echo "<li><a href='login.php' class='link'>Log In</a></li>";                        
                     }
                 ?>
             </ul>

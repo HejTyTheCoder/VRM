@@ -10,16 +10,20 @@
 <body>
     <?php require_once "micro/navClassic.php"; ?>
     <main>
-        <h2>Log In</h2>
-        <form action="inc/login.inc.php" method="post">
-            <input type="text" name="uid" placeholder="Username/Email...">
+        <div class="log_sig">
+            <h1 class="login-title">Log In</h1>
+             
+            <form action="inc/login.inc.php" method="post">
+                <input type="text" class="login-input" name="uid" placeholder="Username...">
             <br>
-            <input type="password" name="pwd" placeholder="Password...">
+            <input type="password" class="login-input" name="pwd" placeholder="Password...">
             <br>
             <?php require "inc/errors.inc.php"; ?>
             <br>
-            <input type="submit" name="submit" value="Log In">
+            <input type="submit" name="submit" class="login-button" value="Log In">
         </form>
+             </div>
+        
     </main>
 </body>
 </html>
