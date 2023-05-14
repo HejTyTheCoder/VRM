@@ -120,7 +120,7 @@ nav {
 nav div.left {
     display: flex;
     align-items: center;
-    padding-left: 18px;
+    padding-left: 20px;
     width: 50%;
 }
 
@@ -142,17 +142,18 @@ nav ul a {
 }
 
 nav ul a:hover {
-    color: rgb(61, 12, 81);
+    color: whitesmoke;
+    
 }
 
 nav a.backArrow {
     font-size: 2.5em;
     text-decoration: none;
-    color:rgb(55, 12, 72);
+    color:white;
 }
 
 nav a.backArrow:hover {
-    color: rgb(140, 18, 192);
+    color: rgb(182, 61, 234);
 }
 
 div.chat {
@@ -204,18 +205,18 @@ nav form input {
 nav form input.text {
     padding: 5px;
     border-radius: 20px 0 0 20px;
-    border: 2px solid rgb(124, 0, 178);
-    background-color: rgb(182, 61, 234);
+    border: 2px solid rgb(182, 61, 234);
+    background-color: white;
 }
 
 nav form input.submit {
     position: relative;
     right: 5px;
-    padding: 7px 7px 7px 2px;
-    color: rgb(55, 12, 72);
+    padding: 6.6px;
+    color: white;
     border-radius: 0 20px 20px 0;
     border: none;   
-    background-color: rgb(124, 0, 178);
+    background-color: rgb(182, 61, 234);
 }
 
 ::-webkit-input-placeholder {
