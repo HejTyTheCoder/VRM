@@ -11,7 +11,7 @@ if(isset($_POST["submit"])) {
         exit();
     }
     try{
-        $database->addMessage($_SESSION['idc'], $_SESSION['idu'], $_POST['message']);
+        $database->sendMessage($_SESSION['idu'], $_SESSION['idc'], $_POST['message']);
     }
     catch(Exception $e){
         header("location: ../chat.php?error=stmt");
