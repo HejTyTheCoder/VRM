@@ -88,7 +88,7 @@ class Database{
     }
 
     public function userIdExists(int $idu){
-        $stmt = $this->connection->prepare("SELECT idu from users where idu = $idu");
+        $stmt = $this->connection->prepare("SELECT idu from users where idu = :idu");
         $stmt->execute(["idu" => $idu]);
         if(sizeof($stmt->fetchAll()) == 0){
             return false;

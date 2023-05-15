@@ -57,7 +57,7 @@
                     echo "Hi " . $_SESSION["username"] . ".";
                     $result = $database->getUser($_SESSION["username"]);
                     print_r($result);
-                    $user = new User($result["idu"], $result["nickname"], $result["authority"], $result["description"]);
+                    $user = new User($result["idu"], $result["nickname"], $result["authority"]);
                     displayChats($database, $user);
                 }
             ?>
