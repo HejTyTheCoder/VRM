@@ -18,7 +18,7 @@ class Database{
     }
 
     public function getMessages(int $chatgroupid){
-        $stmt = $this->connection->prepare("SELECT idu, text from messages where idc = :idc");
+        $stmt = $this->connection->prepare("SELECT idm, idu, text, time from messages where idc = :idc");
         $stmt->execute(["idc" => $chatgroupid]);
         return $stmt->fetchAll();
     }
@@ -26,6 +26,12 @@ class Database{
     public function getChatList(int $idu){
         $stmt = $this->connection->prepare("SELECT c.name from userchatgroups uc join chatgroups c on(uc.idc = c.idc) where ud.idu = :idu");
         $stmt->execute(["idu" => $idu]);
+        return $stmt->fetchAll();
+    }
+
+    public function getUserList(int $idc){
+        $stmt = $this->connection->prepare("SELECT idu FROM userchatgroups WHERE idc = :idc");
+        $stmt->execute(["idc" => $idc]);
         return $stmt->fetchAll();
     }
 

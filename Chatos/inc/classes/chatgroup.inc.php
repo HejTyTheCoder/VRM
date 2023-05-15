@@ -14,4 +14,18 @@ class Chatgroup{
         $this->users = $users;
         $this->messages = $messages;
     }
+
+    public function loadMessages(Database $database){
+        $results = $database->getMessages($this->idc);
+        foreach ($results as $message) {
+            array_push($this->messages, new Message($message[0], $message[1], $this, $message[2], $message[3]));
+        }
+    }
+
+    public function loadUsers(Database $database){
+        $results = $database->getUserList($this->idc);
+        foreach($results as $user){
+            array_push($this->users, new User($user[0]));
+        }
+    }
 }
