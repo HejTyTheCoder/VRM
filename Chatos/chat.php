@@ -3,8 +3,10 @@
 
     require_once "inc/dbh.inc.php";
     require_once "inc/functions.inc.php";
+    require_once "inc/require_classes.inc.php";
 
     $_SESSION["idc"] = $_GET["id"];
+    $chatgroup = new Chatgroup($_SESSION["idc"], "chatgroup");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +20,7 @@
 <body>
     <?php require_once "micro/navClassic.php"; ?>
     <main class="chat">
-        <?php printMessages($database); ?>
+        <?php printMessages($database, $chatgroup); ?>
     </main>
     <div class="chat">
         <form action="inc/sendMessage.inc.php" method="post">

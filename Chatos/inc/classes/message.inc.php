@@ -13,4 +13,8 @@ class Message{
         $this->text = $text;
         $this->time = $time;
     }
+
+    public function getText(){
+        return $this->text;
+    }
 }

@@ -29,6 +29,18 @@ class Chatgroup{
         }
     }
 
+    public function printMessages(){
+        //Print messages here
+        foreach($this->messages as $message){
+            //print individual messages here
+            echo $message->getText();
+        }
+    }
+
+    public function getId(){
+        return $this->idc;
+    }
+
     public function getName(){
         return $this->name;
     }

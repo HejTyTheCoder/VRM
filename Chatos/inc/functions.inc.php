@@ -67,7 +67,11 @@ function displayChats(Database $database, User $user) {
     */
 }
 
-function printMessages(Database $database) {
+function printMessages(Database $database, Chatgroup $chatgroup) {
+    $chatgroup->loadMessages($database);
+    $chatgroup->printMessages();
+
+    /*
     $resultData = $database->getMessages($_SESSION["idc"]);
 
     if($row = mysqli_fetch_assoc($resultData)) {
@@ -83,6 +87,7 @@ function printMessages(Database $database) {
     else {
         echo "<div class='center'>There are no messages.</div>";
     }
+    */
 }
 
 function loginUser(Database $database, $username, $pwd) {
