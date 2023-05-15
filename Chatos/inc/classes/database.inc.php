@@ -24,7 +24,7 @@ class Database{
     }
 
     public function getChatList(int $idu){
-        $stmt = $this->connection->prepare("SELECT c.name from userchatgroups uc join chatgroups c on(uc.idc = c.idc) where ud.idu = :idu");
+        $stmt = $this->connection->prepare("SELECT c.idc, c.name from userchatgroups uc join chatgroups c on(uc.idc = c.idc) where uc.idu = :idu");
         $stmt->execute(["idu" => $idu]);
         return $stmt->fetchAll();
     }

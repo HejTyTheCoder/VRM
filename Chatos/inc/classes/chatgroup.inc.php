@@ -28,4 +28,8 @@ class Chatgroup{
             array_push($this->users, new User($user[0]));
         }
     }
+
+    public function getName(){
+        return $this->name;
+    }
 }

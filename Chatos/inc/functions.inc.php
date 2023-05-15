@@ -29,8 +29,10 @@ function querySimple($sql, $paramKeys, $params, $error) {
 
 
 
-function displayChats($accepted, Database $database) {
-    $resultData = $database->getChatList($_SESSION("idu"), $accepted);
+function displayChats(Database $database, User $user) {
+    $user->loadChatGroups($database);
+    $user->displayChatGroups();
+    /*
     $printed = 0;
     if($row = mysqli_fetch_assoc($resultData)) {
         if($accepted == 1) {
@@ -62,6 +64,7 @@ function displayChats($accepted, Database $database) {
             echo "<br><br>You have no chats.";
         }
     }
+    */
 }
 
 function printMessages(Database $database) {

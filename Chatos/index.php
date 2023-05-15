@@ -3,6 +3,7 @@
 
     require_once "inc/dbh.inc.php";
     require_once "inc/functions.inc.php";
+    require_once "inc/require_classes.inc.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +55,10 @@
                 }
                 else {
                     echo "Hi " . $_SESSION["username"] . ".";
-                    displayChats(1, $database);
+                    $result = $database->getUser($_SESSION["username"]);
+                    print_r($result);
+                    $user = new User($result["idu"], $result["nickname"], $result["authority"], $result["description"]);
+                    displayChats($database, $user);
                 }
             ?>
         </p>
