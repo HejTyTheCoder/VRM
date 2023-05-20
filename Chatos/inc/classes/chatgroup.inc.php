@@ -18,7 +18,7 @@ class Chatgroup{
     public function loadMessages(Database $database){
         $results = $database->getMessages($this->idc);
         foreach ($results as $message) {
-            array_push($this->messages, new Message($message[0], $message[1], $this, $message[2], $message[3]));
+            array_push($this->messages, new Message($message[0], $message[1], $this, $message[2], new DateTime($message[3])));
         }
     }
 
@@ -34,6 +34,7 @@ class Chatgroup{
         foreach($this->messages as $message){
             //print individual messages here
             echo $message->getText();
+            echo "<br>";
         }
     }
 

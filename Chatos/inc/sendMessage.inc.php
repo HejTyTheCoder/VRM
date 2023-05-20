@@ -1,7 +1,11 @@
 <?php
 
 session_start();
+require_once "require_classes.inc.php";
+require_once "dbh.inc.php";
+require_once "functions.inc.php";
 
+$_SESSION["idu"] = $database->getUser($_SESSION["username"])["idu"];
 if(isset($_POST["submit"])) {
 
     require_once "dbh.inc.php";
