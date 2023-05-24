@@ -19,19 +19,7 @@
     <nav>
          <?php if(isset($_SESSION["username"])) echo "<a href='complaints.php'>!</a>"; ?>
         <h1 id="logo" >CHATOS</h1>
-        <div class="left">
-            <?php
-                if(isset($_SESSION["username"])) {
-                    echo "
-                        <form action='inc/newChat.inc.php' method='post'>
-                            <input type='text' name='uid' class='text' placeholder='Send chat request...'>
-                            <input type='submit' name='submit' class='submit' value='Send'>
-                        </form>
-                    ";
-                    require "inc/errors.inc.php";
-                }  
-            ?>           
-        </div>
+        
         <div class="right">
             <ul>
                 <?php
@@ -48,6 +36,23 @@
         </div>
     </nav>
     <main>
+       
+             <div class="chat">
+            <?php
+                if(isset($_SESSION["username"])) {
+                    echo "
+                        <form action='inc/newChat.inc.php' method='post'>
+                            <input type='text' name='uid' class='text' placeholder='Send chat request...'>
+                            <input type='submit' name='submit' class='submit' value='Send'>
+                        </form>
+                    ";
+                    require "inc/errors.inc.php";
+                }  
+            ?>           
+        </div>
+        
+  
+        <div class="chat">
         <p>
             <?php
                 if(!isset($_SESSION["username"])) {
@@ -62,9 +67,7 @@
                 }
             ?>
         </p>
+        </div>
     </main>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>

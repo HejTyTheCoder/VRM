@@ -33,8 +33,11 @@ class Chatgroup{
         //Print messages here
         foreach($this->messages as $message){
             //print individual messages here
+            echo "<div class='bunka'>";
+            echo "<p class=vbunce>";
             echo $message->getText();
-            echo "<br>";
+            echo "</p>";
+            echo "</div>";
         }
     }
 

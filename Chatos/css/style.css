@@ -5,57 +5,6 @@ body {
     background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(255, 255, 255));
 }
 
-main {
-    width: 90%;
-    margin: auto;
-    padding-top: 20px;
-}
-
-main.chat {
-    width: 92%;
-    margin: auto;
-    padding-top: 10px;
-    padding-bottom: 110px;
-}
-
-div.bubbler1 {
-    display: flex;
-    justify-content: right;
-}
-
-div.bubbler2 {
-    display: flex;
-    justify-content: left;
-}
-
-div.bubble {
-    display: flex;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin: 2px;
-    max-width: 45%;
-    overflow-wrap: anywhere;
-    justify-content: center;
-    border-radius: 25px;
-}
-
-div.bubble1 {   
-    background-color: #5C007C;
-}
-
-div.bubble2 {
-    background-color: #5C007C;
-}
-
-div.center {
-    display: flex;
-    padding-top: 300px;
-    justify-content: center;
-}
-
-
 .log_sig {
     border: 1px solid #ccc;
     margin: 50px auto;
@@ -126,7 +75,7 @@ nav div.left {
 
 nav div.right {
     display: flex;
-    width: 50%;
+    width: 100%;
     justify-content: right;
 }
 
@@ -143,7 +92,7 @@ nav ul a {
 
 nav ul a:hover {
     color: whitesmoke;
-    
+
 }
 
 nav a.backArrow {
@@ -155,14 +104,18 @@ nav a.backArrow {
 nav a.backArrow:hover {
     color: rgb(182, 61, 234);
 }
-
-div.chat {
-    height: 100px;
-    position: fixed;
+main.chat{
     display: flex;
-    width: 100%;
-    bottom: 0;
-    background-color: rgb(156, 18, 215);
+    flex-direction: column;
+
+}
+div.chat {
+    margin: 25px;
+    padding: 3%;
+
+    background-color: rgb(182 61 234 / 25%);
+    
+
 }
 
 div.chat form {
@@ -170,11 +123,17 @@ div.chat form {
     display: flex;
     align-items: center;
     justify-content: right;
+
+
+
+
 }
 
 div.chat input {
-    height: 60%;
-    margin-right: 10px; 
+    height: 42%;
+    margin-right: 20px; 
+
+
 }
 
 div.chat input.message {
@@ -183,8 +142,9 @@ div.chat input.message {
 }
 
 div.chat input.sendMessage {
-    width: 60px;
+    width: 50px;
 }
+
 
 div.error {
     font-size: 0.8em;
@@ -234,70 +194,58 @@ nav form input.submit {
     margin-left: 1em;
 }
 
-
+div.bunka{
+ 
+}
+.vbunce{
+     background-color: white;
+    display: inline-block;
+     padding: 5px;
+     margin:  4px;
+}
 .link {
-	position: relative;
-	display: inline-block;
-	text-decoration: none;
-	color: #fff;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
 }
 .link::before,
 .link::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	width: 100%;
-	height: 2px;
-	background-color: white;
-	transform: scaleX(0);
-	transition: transform 0.3s;
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transform: scaleX(0);
+    transition: transform 0.3s;
 }
 .link::before {
-	top: -3px;
-	transform-origin: left;
+    top: -3px;
+    transform-origin: left;
 }
 .link::after {
-	bottom: -3px;
-	transform-origin: right;
+    bottom: -3px;
+    transform-origin: right;
 }
 .link:hover::before,
 .link:hover::after,
 .active::before,
 .active::after {
-	transform: scaleX(1);
+    transform: scaleX(1);
 }
 
-/*  #   */
-/*#navDir {
-    display: flex;
-    width: 100%;
-    height: 80px;
-    margin: 0;
-    font-size: 1.5em;
-    justify-content: center;
-    color: white;
-    background-color: #5C007C;
+/**/
+#chat-container {
+    margin: 25px;
 }
 
-#navDir a {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    left: 15px;
-    top: 15px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 1.7em;
-    border-radius: 50%;
-    border: none;
-    color: rgb(61, 12, 81);
-    background-color: rgb(124, 0, 178);
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25),
-        2px 2px 5px rgba(0, 0, 0, 0.25);
+#side-bar {
+    background: rgb(182 61 234 / 25%);
+    padding: 25px;
 }
 
-#navDir a:hover {
-    font-size: 1.75em;
-    color: rgb(213, 2, 2);
-    filter: drop-shadow(0 0 5px rgb(255, 35, 35));
-}*/
+#chat-window {
+    border-radius: 0 10px 10px 0;
+    flex-grow: 1;
+}

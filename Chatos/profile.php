@@ -16,10 +16,12 @@
 <body>
     <?php require_once "micro/navClassic.php"; ?>
     <main>
+         <div class="chat">
         <h2><?php echo $_SESSION["username"] ?></h2>
         <?php
             displayChats(0, $database);
         ?>
+         </div>
     </main>
 </body>
 </html>
