@@ -29,7 +29,7 @@
                     }
                     else {
                         echo "<li><a href='signup.php' class='link' >Sign Up</a></li>"; 
-                        echo "<li><a href='login.php' class='link'>Log In</a></li>";                        
+                        echo "<li><a href='login.php' class='link'>Log In</a></li>";
                     }
                 ?>
             </ul>
@@ -37,7 +37,8 @@
     </nav>
     <main>
        
-             <div class="chat">
+        <div class="chat">
+            <div><!---We need a place for invitations so I thought of this to reformate it a litle--->
             <?php
                 if(isset($_SESSION["username"])) {
                     echo "
@@ -47,8 +48,18 @@
                         </form>
                     ";
                     require "inc/errors.inc.php";
-                }  
-            ?>           
+                }
+            ?>
+            </div>
+            <div><!--I think it would look good if the invitations were shown here--->
+                <?php
+                $result = $database->getUser($_SESSION["username"]);
+                $user = new User($result["idu"], $result["nickname"], $result["authority"]);
+                $user->loadInvitations($database);
+                $user->displayInvitations();
+
+                ?>
+            </div>
         </div>
         
   
@@ -59,10 +70,8 @@
                     echo "You are not logged in.";
                 }
                 else {
-                    echo "Hi " . $_SESSION["username"] . ".";
-                    $result = $database->getUser($_SESSION["username"]);
-                    print_r($result);
-                    $user = new User($result["idu"], $result["nickname"], $result["authority"]);
+                    echo "Hi " . $_SESSION["username"] . ".<br>";
+                    //print_r($result);
                     displayChats($database, $user);
                 }
             ?>

@@ -29,5 +29,23 @@ class User{
             echo("<a href='chat.php?id=".$chatgroup->getId()."'>".$chatgroup->getName()."</a><br>");
         }
     }
+
+    public function loadInvitations(Database $database){
+        $results = $database->getInvitations($this->idu);
+        foreach($results as $invitation){
+            array_push($this->invitations, new Invitation($invitation["idi"], $invitation["sender"], $this, new Chatgroup($invitation["ide"]), $invitation["text"]));
+        }
+    }
+
+    public function displayInvitations(){
+        if(sizeof($this->invitations) == 0){
+            echo("You do not have any invitations");
+        }
+        else{
+            foreach($this->invitations as $invitation){
+                echo($invitation."<br>");
+            }
+        }
+    }
 }
 ?>

@@ -17,10 +17,10 @@ class Database{
         $this->dbName = $dbName;
     }
 
-    public function getMessages(int $chatgroupid){
-        $stmt = $this->connection->prepare("SELECT idm, idu, text, time from messages where idc = :idc");
+    public function getMessages(int $chatgroupid, int $numberOfMessages){
+        $stmt = $this->connection->prepare("SELECT idm, idu, text, time from messages where idc = :idc order by time DESC limit ".$numberOfMessages);
         $stmt->execute(["idc" => $chatgroupid]);
-        return $stmt->fetchAll();
+        return array_reverse($stmt->fetchAll());
     }
 
     public function getChatList(int $idu){
@@ -47,7 +47,7 @@ class Database{
         return $stmt->fetch();
     }
 
-    public function getUserAuthority(int $idu, int $idc){
+    public function getUserChatAuthority(int $idu, int $idc){
         $stmt = $this->connection->prepare("SELECT authority FROM userchatgroups WHERE idu = :idu and idc = :idc");
         $stmt->execute(["idu" => $idu, "idc" => $idc]);
         return $stmt->fetch();
@@ -163,6 +163,132 @@ class Database{
         return false;
     }
 
+    public function changePassword(string $nickname, string $currentPassword, string $newPassword){
+        if(!password_verify($currentPassword, $this->getPasswordsHash($nickname))){
+            throw new Exception("Invalid current password");
+        }
+        $stmt = $this->connection->prepare("UPDATE users SET password = :password WHERE nickname = :nickname");
+        if(!$stmt->execute(["nickname" => $nickname, "password" => $newPassword])){
+            throw new Exception("Password change unsuccessful");
+        }
+    }
+
+    public function changeDescription(string $nickname, string $description){
+        $stmt = $this->connection->prepare("UPDATE users SET description = :description WHERE nickname = :nickname");
+        if(!$stmt->execute(["nickname" => $nickname, "description" => $description])){
+            throw new Exception("Description change unsuccessful");
+        }
+    }
+
+    public function admin_deleteUserDescription(string $adminNickname, string $adminPassword, int $nickname){
+        $this->validateAdmin($adminNickname, $adminPassword, 3);
+        if(!$this->userExists($nickname)){
+            throw new Exception("User does not exist");
+        }
+        $stmt = $this->connection->prepare("UPDATE users SET description = null WHERE nickname = :nickname");
+        if(!$stmt->execute(["nickname" => $nickname])){
+            throw new Exception("Description change unsuccessful");
+        }
+    }
+
+    public function admin_getUserMessages(string $adminNickname, string $adminPassword, string $nickname, int $numberOfMessages){
+        $this->validateAdmin($adminNickname, $adminPassword, 3);
+        if(!$this->userExists($nickname)){
+            throw new Exception("User does not exist");
+        }
+        $stmt = $this->connection->prepare("SELECT m.idm as 'idm', m.idu as 'idu', m.idc as 'idc', m.text as 'text', m.time as 'time' FROM messages m join users u on(u.idu = m.idu) where u.nickname = :nickname order by m.time desc limit ".$numberOfMessages);
+        if(!$stmt->execute([":nickname" => $nickname])){
+            throw new Exception("Action unsuccessful");
+        }
+        return $stmt->fetchAll();
+    }
+
+    public function admin_getChatGroupMessages(string $adminNickname, string $adminPassword, int $idc, int $numberOfMessages){
+        $this->validateAdmin($adminNickname, $adminPassword, 3);
+        if(!$this->chatGroupExists($idc)){
+            throw new Exception("ChatGroup does not exist");
+        }
+        $stmt = $this->connection->prepare("SELECT * FROM messages where idc = :idc order by time DESC LIMIT ".$numberOfMessages);
+        if(!$stmt->execute(["idc" => $idc])){
+            throw new Exception("Action unsuccessful");
+        }
+        return $stmt->fetchAll();
+    }
+
+    public function admin_deleteInvite(string $adminNickname, string $adminPassword, int $idi){
+        $this->validateAdmin($adminNickname, $adminPassword, 2);
+        if(!$this->inviteExists($idi)){
+            throw new Exception("Invite does not exist");
+        }
+        $stmt = $this->connection->prepare("DELETE FROM invites WHERE idi = :idi");
+        if(!$stmt->execute(["idi" => $idi])){
+            throw new Exception("Action unsuccessful");
+        }
+    }
+
+    public function admin_deleteMessage(string $adminNickname, string $adminPassword, int $idm){
+        $this->validateAdmin($adminNickname, $adminNickname, 2);
+        if(!$this->messageExists($idm)){
+            throw new Exception("Message not found");
+        }
+        $stmt = $this->connection->prepare("DELETE FROM messages where idm = :idm");
+        $stmt->execute(["idm" => $idm]);
+    }
+
+    public function admin_deleteUser(string $adminNickname, string $adminPassword, string $nickname){
+        $this->validateAdmin($adminNickname, $adminPassword, 3);
+        if(!$this->userExists($nickname)){
+            throw new Exception("User is already deleted");
+        }
+        $stmt = $this->connection->prepare("DELETE FROM users WHERE nickname = :nickname");
+        $stmt->execute(["nickname" => $nickname]);
+    }
+
+    public function inviteExists(int $idi){
+        $stmt = $this->connection->prepare("SELECT * FROM invitations WHERE idi = :idi");
+        $stmt->execute(["idi" => $idi]);
+        if(sizeof($stmt->fetchAll()) == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    private function validateAdmin(string $adminNickname, string $adminPassword, int $neededAuthority){
+        if(!$this->userExists($adminNickname)){
+            throw new Exception("Admin user does not exist");
+        }
+        if($this->getUserAuthority($adminNickname) < $neededAuthority){
+            throw new Exception("Insufficient permissions");
+        }
+        if(!password_verify($adminPassword, $this->getPasswordsHash($adminNickname))){
+            throw new Exception("Invalid password for admin");
+        }
+    }
+
+    private function messageExists(int $idm){
+        $stmt = $this->connection->prepare("SELECT * FROM messages WHERE idm = :idm");
+        $stmt->execute(["idm" => $idm]);
+        if(sizeof($stmt->fetchAll()) == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    private function getPasswordsHash(string $nickname){
+        $stmt = $this->connection->prepare("SELECT password FROM users WHERE nickname = :nickname");
+        $stmt->execute(["nickname" => $nickname]);
+        return $stmt->fetch()["password"];
+    }
+
+    private function getUserAuthority(string $nickname){
+        $stmt = $this->connection->prepare("SELECT authority from users where nickname = :nickname");
+        $stmt->execute(["nickname" => $nickname]);
+        return $stmt->fetch()["authority"];
+    }
 
 }
 

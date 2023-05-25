@@ -7,7 +7,7 @@ class Chatgroup{
     private array $users;
     private array $messages;
 
-    public function __construct(int $idc, string $name, bool $directchat = false, array $users = array(), array $messages = array()){
+    public function __construct(int $idc, string $name = "chatgroup", bool $directchat = false, array $users = array(), array $messages = array()){
         $this->idc = $idc;
         $this->name = $name;
         $this->directchat = $directchat;
@@ -16,7 +16,7 @@ class Chatgroup{
     }
 
     public function loadMessages(Database $database){
-        $results = $database->getMessages($this->idc);
+        $results = $database->getMessages($this->idc, 100);
         foreach ($results as $message) {
             array_push($this->messages, new Message($message[0], $message[1], $this, $message[2], new DateTime($message[3])));
         }
