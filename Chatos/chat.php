@@ -24,7 +24,7 @@ $chatgroup = new Chatgroup($_SESSION["idc"], "chatgroup");
             <main class="chat">
                 <?php printMessages($database, $chatgroup); ?>
             </main>
-            <form action="inc/sendMessage.inc.php" method="post">
+            <form action="inc/sendMessage.inc.php" method="post" style="padding-top: 20px;">
                 <input type="text" name="message" placeholder="Aa" class="message">
                 <input type="submit" name="submit" value="Send" class="sendMessage">
             </form>

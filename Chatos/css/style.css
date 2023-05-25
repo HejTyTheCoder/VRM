@@ -122,8 +122,8 @@ div.chat form {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: right;
-
+    justify-content: center;
+    
 
 
 
@@ -194,9 +194,7 @@ nav form input.submit {
     margin-left: 1em;
 }
 
-div.bunka{
- 
-}
+
 .vbunce{
      background-color: white;
     display: inline-block;
@@ -236,7 +234,7 @@ div.bunka{
 }
 
 /**/
-#chat-container {
+/*#chat-container {
     margin: 25px;
 }
 
@@ -248,4 +246,80 @@ div.bunka{
 #chat-window {
     border-radius: 0 10px 10px 0;
     flex-grow: 1;
+}
+*/
+
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+
+
+.input {
+	position: relative;
+        margin-top: 30px;
+        margin-bottom: 30px;
+}
+.input__field {
+	padding: 10px;
+	
+	border-radius: 10px;
+	font: inherit;
+	width: 94%;
+	border: 1px solid #ccc;
+	
+}
+.input__field_2 {
+	padding: 10px;
+	
+	border-radius: 10px;
+	font: inherit;
+	width: 94%;
+	border: 1px solid #ccc;
+	
+}
+.input__label {
+	position: absolute;
+	top: 0;
+	left: 0;
+        color:#ccc; 
+	transform: translate(10px, 10px);
+	transform-origin: left;
+	transition: transform 0.25s;
+}
+.input__field:focus-visible ~ .input__label,
+.input__field:valid ~ .input__label {
+	transform: translate(0, -30px) scale(0.8);
+	color: #d1c5fc;
+}
+
+.input__field_2:is(:focus-visible, :valid) {
+	outline-color: #ccc;
+}
+.input__field_2:focus-visible ~ .input__label,
+.input__field_2:valid ~ .input__label {
+	transform: translate(0, -30px) scale(0.8);
+	color: #d1c5fc;
+}
+
+.input__field_2:is(:focus-visible, :valid) {
+	outline-color: #ccc;
+}
+.input__icon-wrapper {
+	position: absolute;
+	top: 50%;
+	right: 12px;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+.input__icon {
+	color: #999;
+	font-size: 24px;
+}
+.input__icon:hover {
+	color: #333;
 }

@@ -14,12 +14,24 @@
         <h1 class="login-title">Create account</h1>
        
         <form action="inc/signup.inc.php" method = "post">
-            <input type="text" class="login-input" name="uid" placeholder="Username...">
-            <br>    
-            <input type="password" class="login-input" name="pwd" placeholder="Password...">
-            <br>
-            <input type="password" class="login-input" name="pwd2" placeholder="Repeat password...">
-            <br>
+            <div class="input">
+                        <input class="input__field_2" name="uid" type="text" required />
+                        <label for="username" class="input__label">Username</label>
+                        <br>
+                    </div>
+                    <div class="input">
+                        <input class="input__field" name="pwd" type="password"  required />
+                        <label for="password" class="input__label">Password</label>
+                         <br>
+                    </div>
+                     <div class="input">
+                         
+                        <input class="input__field" name="pwd2" type="password"  required />
+                        <label for="password" class="input__label">Repeat password</label>
+                        
+                        
+                    </div>
+            
             <?php require "inc/errors.inc.php"; ?>
             <br>
             <input type="submit" name="submit" class="login-button" value="Create Account">
