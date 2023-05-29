@@ -26,7 +26,7 @@ class User{
 
     public function displayChatGroups(){
         foreach($this->chatgroups as $chatgroup){
-            echo("<a href='chat.php?id=".$chatgroup->getId()."'>".$chatgroup->getName()."</a><br>");
+            echo("<a href='index.php?id=".$chatgroup->getId()."'>".$chatgroup->getName()."</a><br>");
         }
     }
 

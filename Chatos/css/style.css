@@ -112,7 +112,7 @@ main.chat{
 div.chat {
     margin: 25px;
     padding: 3%;
-
+    flex: 1;
     background-color: rgb(182 61 234 / 25%);
     
 
@@ -121,11 +121,7 @@ div.chat {
 div.chat form {
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    
-
-
+  
 
 }
 
@@ -297,7 +293,7 @@ nav form input.submit {
 	color: #d1c5fc;
 }
 
-.input__field_2:is(:focus-visible, :valid) {
+.input__field:is(:focus-visible, :valid) {
 	outline-color: #ccc;
 }
 .input__field_2:focus-visible ~ .input__label,
@@ -322,4 +318,9 @@ nav form input.submit {
 }
 .input__icon:hover {
 	color: #333;
+}
+
+#chat_groups{
+    display: flex;
+    flex-direction: row;
 }
