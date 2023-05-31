@@ -25,9 +25,11 @@ class User{
     }
 
     public function displayChatGroups(){
+        echo "<div class='group'>";
         foreach($this->chatgroups as $chatgroup){
-            echo("<a href='index.php?id=".$chatgroup->getId()."'>".$chatgroup->getName()."</a><br>");
+            echo("<a class='chaty' href='index.php?id=".$chatgroup->getId()."'><div class='chaty'>".$chatgroup->getName()."</div></a>");
         }
+        echo "</div>";
     }
 
     public function loadInvitations(Database $database){

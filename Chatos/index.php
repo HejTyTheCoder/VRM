@@ -50,8 +50,9 @@ if (isset($_GET["id"])) {
             ?>
 
             </div>
-             <div id="chat_groups">
-            <div class="chat">
+            <section id="chat_groups">
+          
+                 <div class="chat burger" style="flex-grow:0;">
                 <!---We need a place for invitations so I thought of this to reformate it a litle--->
             <?php
             if (isset($_SESSION["username"])) {
@@ -82,7 +83,7 @@ if (isset($_GET["id"])) {
         <?php
         if (isset($_GET["id"])) {
          ?>
-                <div class="chat">
+                <div class="chat" style="flex-grow:1;">
                     <main class="chat">
                 <?php printMessages($database, $chatgroup); ?>
                     </main>
@@ -96,7 +97,8 @@ if (isset($_GET["id"])) {
          echo 'Please select chatgroup';
            }
         ?>
-                </div>
+              
+                </section>
         </main>
     </body>
 </html>

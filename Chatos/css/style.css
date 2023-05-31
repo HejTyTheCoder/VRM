@@ -114,7 +114,7 @@ div.chat {
     padding: 3%;
     flex: 1;
     background-color: rgb(182 61 234 / 25%);
-    
+   
 
 }
 
@@ -323,4 +323,39 @@ nav form input.submit {
 #chat_groups{
     display: flex;
     flex-direction: row;
+}
+.group{
+
+   margin:3px;
+   padding: 5px;
+  text-align: center;
+  font-size: 1.1em;
+  
+}
+div.chaty {
+    margin: 10px 0;
+    background-color: rgb(108 66 125 / 17%);
+    padding: 10px;
+    color: #333;
+}
+
+@media only screen and (max-width: 1024px){
+
+     #chat_groups {
+        display: flex;
+
+    }
+ 
+    div.chat{
+        flex: 1;
+
+    }
+    
+    .burger {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+
 }
