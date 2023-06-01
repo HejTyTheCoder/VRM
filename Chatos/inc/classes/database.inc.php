@@ -75,16 +75,28 @@ class Database{
         return $idc;
     }
 
-    public function createDirectChatGroup(string $groupName, int $idu1, int $idu2){
-        if(!$this->userIdExists($idu1) || !$this->userIdExists($idu2)){
-            throw new Exception("User does not exist");
+    public function createDirectChatGroup(string $groupName, int $idu1, int $idu2 = null){
+        if($idu2 != null){
+            if(!$this->userIdExists($idu1) || !$this->userIdExists($idu2)){
+                throw new Exception("User does not exist");
+            }
+            $stmt = $this->connection->prepare("INSERT into chatgroups (name) values (:groupName)");
+            $stmt->execute(["groupName" => $groupName]);
+            $idc = (int)$this->connection->lastInsertId("idc");
+            $this->addUserToGroup($idc, $idu1, 5);
+            $this->addUserToGroup($idc, $idu2, 5);
+            return $idc;
         }
-        $stmt = $this->connection->prepare("INSERT into chatgroups (name) values (:groupName)");
-        $stmt->execute(["groupName" => $groupName]);
-        $idc = $this->connection->lastInsertId();
-        $this->addUserToGroup($idc, $idu1, 5);
-        $this->addUserToGroup($idc, $idu2, 5);
-        return $idc;
+        else{
+            if(!$this->userIdExists($idu1)){
+                throw new Exception("User does not exist");
+            }
+            $stmt = $this->connection->prepare("INSERT into chatgroups (name) values (:groupName)");
+            $stmt->execute(["groupName" => $groupName]);
+            $idc = (int)$this->connection->lastInsertId("idc");
+            $this->addUserToGroup($idc, $idu1, 5);
+            return $idc;
+        }
     }
 
     public function userIdExists(int $idu){
@@ -129,7 +141,10 @@ class Database{
     }
     
     public function sendInvite(int $senderId, int $acceptorId, int $chatGroupId = null, string $text = null){
-        $this->createDirectChatGroup("", $chatGroupId, $acceptorId);
+        if($chatGroupId == null){
+            $chatGroupId = $this->createDirectChatGroup("DirectChatgroup", $senderId);
+            
+        }
         $stmt = $this->connection->prepare("INSERT INTO invitations (sender, idu, idc, text) VALUES (:senderId, :acceptorId, :chatGroupId, :text)");
         $stmt->execute(["senderId" => $senderId, "acceptorId" => $acceptorId, "chatGroupId" => $chatGroupId, "text" => $text]);
     }
@@ -137,7 +152,7 @@ class Database{
     public function acceptChat($idi){
         $stmt = $this->connection->prepare("SELECT idu, idc FROM invitations WHERE idi = :idi");
         $stmt->execute(["idi" => $idi]);
-        $values = $stmt->fetchAll();
+        $values = $stmt->fetch();
         if(sizeof($values) == 0){
             throw new Exception("Invitation not found");
         }

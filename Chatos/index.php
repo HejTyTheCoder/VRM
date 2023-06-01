@@ -11,22 +11,24 @@ if (isset($_GET["id"])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>Chatos</title>
-    </head>
-    <body>
 
-        <nav>
-            <?php if (isset($_SESSION["username"])) echo "<a href='complaints.php'>!</a>"; ?>
-            <h1 id="logo" >CHATOS</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Chatos</title>
+</head>
 
-            <div class="right">
-                <ul>
-                    <?php
+<body>
+
+    <nav>
+        <?php if (isset($_SESSION["username"])) echo "<a href='complaints.php'>!</a>"; ?>
+        <h1 id="logo">CHATOS</h1>
+
+        <div class="right">
+            <ul>
+                <?php
                     if (isset($_SESSION["username"])) {
                         echo "<li><a href='profile.php' class='link'>Profile</a></li>";
                         echo "<li><a href='inc/logout.inc.php' class='link'>Log Out</a></li>";
@@ -35,70 +37,80 @@ if (isset($_GET["id"])) {
                         echo "<li><a href='login.php' class='link'>Log In</a></li>";
                     }
                     ?>
-                </ul>
-            </div>
-        </nav>
-        <main>
+            </ul>
+        </div>
+    </nav>
+    <main>
 
-           
-            <div class="chat"><!--I think it would look good if the invitations were shown here--->
-            <?php
-            $result = $database->getUser($_SESSION["username"]);
-            $user = new User($result["idu"], $result["nickname"], $result["authority"]);
-            $user->loadInvitations($database);
-            $user->displayInvitations();
-            ?>
 
-            </div>
-            <section id="chat_groups">
-          
-                 <div class="chat burger" style="flex-grow:0;">
-                <!---We need a place for invitations so I thought of this to reformate it a litle--->
+        <div class="chat">
+            <!--I think it would look good if the invitations were shown here--->
             <?php
-            if (isset($_SESSION["username"])) {
-             echo "
-                        <form action='inc/newChat.inc.php' method='post'>
-                            <input type='text' name='uid' class='text' placeholder='Send chat request...'>
-                            <input type='submit' name='submit' class='submit' value='Send'>
-                        </form>
-                    ";
-             require "inc/errors.inc.php";
+            if(isset($_SESSION["username"])){
+                $result = $database->getUser($_SESSION["username"]);
+                $user = new User($result["idu"], $result["nickname"], $result["authority"]);
+                $user->loadInvitations($database);
+                $user->displayInvitations();
             }
+            else{
+                echo "You are not logged in";
+            }
+            
             ?>
 
-                <p>
-                <?php
-                if (!isset($_SESSION["username"])) {
-                    echo "You are not logged in.";
-                } else {
+        </div>
+        <?php
+        if(isset($_SESSION["username"])){
+            ?>
+            <section id="chat_groups">
+
+                <div class="chat burger" style="flex-grow:0;">
+                    <!---We need a place for invitations so I thought of this to reformate it a litle--->
+                    <?php
+                echo "
+                            <form action='inc/sendInvitation.inc.php' method='post'>
+                                <input type='text' name='uid' class='text' placeholder='Send chat request...'>
+                                <input type='submit' name='submit' class='submit' value='Send'>
+                            </form>
+                        ";
+                require "inc/errors.inc.php";
+                ?>
+
+                    <p>
+                    <?php
+                    
                     echo "Hi " . $_SESSION["username"] . ".<br>";
                     //print_r($result);
                     displayChats($database, $user);
+                    ?>
+                    </p>
+                </div>
+
+
+                <?php
+                
+                if (isset($_GET["id"])) {
+                    ?>
+                    <div class="chat" style="flex-grow:1;">
+                        <main class="chat">
+                            <?php printMessages($database, $chatgroup); ?>
+                        </main>
+                        <form action="inc/sendMessage.inc.php" method="post" style="padding-top: 20px;">
+                            <input type="text" name="message" placeholder="Aa" class="message">
+                            <input type="submit" name="submit" value="Send" class="sendMessage">
+                        </form>
+                    </div>
+                    <?php
+                } else {
+                    echo 'Please select chatgroup';
                 }
                 ?>
-                </p>
-            </div>
 
+            </section>
+            <?php
+            }
+            ?>
+    </main>
+</body>
 
-        <?php
-        if (isset($_GET["id"])) {
-         ?>
-                <div class="chat" style="flex-grow:1;">
-                    <main class="chat">
-                <?php printMessages($database, $chatgroup); ?>
-                    </main>
-                    <form action="inc/sendMessage.inc.php" method="post" style="padding-top: 20px;">
-                        <input type="text" name="message" placeholder="Aa" class="message">
-                        <input type="submit" name="submit" value="Send" class="sendMessage">
-                    </form>
-                </div>
-        <?php
-        } else {
-         echo 'Please select chatgroup';
-           }
-        ?>
-              
-                </section>
-        </main>
-    </body>
 </html>
