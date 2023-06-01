@@ -333,12 +333,24 @@ nav form input.submit {
   
 }
 div.chaty {
-    margin: 10px 0;
-    background-color: rgb(108 66 125 / 17%);
+
+    background-color: white;
     padding: 10px;
     color: #333;
+   
+  
 }
-
+a.chaty{
+    list-style: none;
+    text-decoration: none;
+    
+}
+div.chaty:hover{
+    background-color: rgb(108 66 125 / 17%);
+}
+a.chaty:hover{
+    color: white;
+}
 @media only screen and (max-width: 1024px){
 
      #chat_groups {
