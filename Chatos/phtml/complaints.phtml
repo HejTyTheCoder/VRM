@@ -1,0 +1,32 @@
+<?php
+    if($_SESSION["role"] != "admin") {
+?>
+<form action='#' method='post'>
+    <?php   
+        if(isset($errorMessage)) {
+    ?>
+    <div class="errorMessage">
+        <?= $errorMessage ?>
+    </div>
+    <?php
+        }
+    ?>
+    <input type='text' name='complaint' class='complaintText' placeholder='Write a complaint...'>
+    <input type='submit' name='submit' class='complaintSubmit' value='Send'>
+</form>
+<?php
+    }
+    else {
+        $resultData = $database->getComplaints();
+
+        if($row = mysqli_fetch_assoc($resultData)) {
+            do {
+                echo "<h2>" . $row["user"] . "</h2>" . $row["message"] . "<br><br>";
+            }
+            while ($row = mysqli_fetch_assoc($resultData));
+        }
+        else {
+            echo "There are no complaints.";
+        }
+    }
+?>

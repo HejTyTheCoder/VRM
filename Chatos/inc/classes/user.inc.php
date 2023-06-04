@@ -45,7 +45,14 @@ class User{
         }
         else{
             foreach($this->invitations as $invitation){
-                echo("<a href='inc/acceptInvite.inc.php?idi=".$invitation->getId()."'>".$invitation."</a><br>");
+                ?>
+                <form action="#" method="get">
+                    <label for="idi" . <?=$invitation->getId()?>><?=$invitation?></label>
+                    <input type="hidden" name="idi" id="idi" . <?=$invitation->getId()?> value=<?=$invitation->getId()?>>
+                    <input type="submit" name="inviteSubmit" value="Decline">
+                    <input type="submit" name="inviteSubmit" value="Accept">
+                </form>
+                <?php
             }
         }
     }

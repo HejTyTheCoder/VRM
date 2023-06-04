@@ -1,43 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-    <title>Sign Up</title>
-</head>
-<body>
-    <?php require_once "micro/navClassic.php"; ?>
-    <main>
-        <div class="log_sig">
-        <h1 class="login-title">Create account</h1>
+<?php
+    require_once "phtml/header.phtml";
+
+    if(isset($_POST["submit"])) {
+        $username = $_POST["uid"];
+        $email = $_POST["email"];
+        $pwd = $_POST["pwd"];
+        $pwd2 = $_POST["pwd2"];
        
-        <form action="inc/signup.inc.php" method = "post">
-            <div class="input">
-                        <input class="input__field_2" name="uid" type="text" required />
-                        <label for="username" class="input__label">Username</label>
-                        <br>
-                    </div>
-                    <div class="input">
-                        <input class="input__field" name="pwd" type="password"  required />
-                        <label for="password" class="input__label">Password</label>
-                         <br>
-                    </div>
-                     <div class="input">
-                         
-                        <input class="input__field" name="pwd2" type="password"  required />
-                        <label for="password" class="input__label">Repeat password</label>
-                        
-                        
-                    </div>
-            
-            <?php require "inc/errors.inc.php"; ?>
-            <br>
-            <input type="submit" name="submit" class="login-button" value="Create Account">
-        
-      </form>
-        </div>
-    </main>
-</body>
-</html>
+        if(empty($username) || empty($pwd) || empty($pwd2)) {
+            $errorMessage = "You did not fill in all the fields.";
+        }
+        else if(!preg_match("/^[a-zA-Z0-9]*/", $username)) {
+            $errorMessage = "The username is not valid.";
+        }
+        else if($database->userExists($username)) {
+            $errorMessage = "The username " . $username . " is already used.";
+        }
+        else if($pwd != $pwd2) {
+            $errorMessage = "Passwords do not match.";
+        }
+        else if(mb_strlen($pwd) < 8 || !preg_match("~\d~", $pwd) || !preg_match("~[A-Z]~", $pwd)) {
+            $errorMessage = "Password must contail at least 1 capital letter, 1 number and the minimum lenght is 8 characters.";
+        }
+        else {
+            $database->createUser($username, $pwd);
+            $database->loginUser($username, $pwd);
+            header("location: index.php");
+        }
+    }
+
+    require_once "phtml/signup.phtml";
+    require_once "phtml/footer.phtml";
+?>

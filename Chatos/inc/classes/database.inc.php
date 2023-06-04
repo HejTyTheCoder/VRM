@@ -173,6 +173,8 @@ class Database{
         $stmt = $this->connection->prepare("SELECT password FROM users WHERE nickname = :nickname");
         $stmt->execute(["nickname" => $nickname]);
         if(password_verify($password, $stmt->fetch()[0])){
+            $_SESSION["username"] = $nickname;
+            $_SESSION["idu"] = $this->getUser($_SESSION["username"])["idu"];
             return true;
         }
         return false;

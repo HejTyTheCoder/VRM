@@ -1,10 +1,18 @@
 <?php
 session_start();
 
-require_once "inc/dbh.inc.php";
-require_once "inc/functions.inc.php";
-require_once "inc/require_classes.inc.php";
+require_once "inc/classes/chatgroup.inc.php";
+require_once "inc/classes/database.inc.php";
+require_once "inc/classes/invitation.inc.php";
+require_once "inc/classes/message.inc.php";
+require_once "inc/classes/user.inc.php";
+require_once "inc/classes/database.inc.php";
+$database = new Database();
 
+if (isset($_SESSION["username"])) {
+    $result = $database->getUser($_SESSION["username"]);
+    $user = new User($result["idu"], $result["nickname"], $result["authority"]);
+}
 if (isset($_GET["id"])) {
     $_SESSION["idc"] = $_GET["id"];
     $chatgroup = new Chatgroup($_SESSION["idc"], "chatgroup");
@@ -25,7 +33,7 @@ if (isset($_GET["id"])) {
     <nav>
         <?php 
             if (isset($_SESSION["username"])) {
-                echo "<a href='complaints.php'>!</a>";
+                echo "<a href='complaints.php?id=-1'>!</a>";
             }
         ?>
         <div class="navbar navbar-expand-lg">
@@ -40,14 +48,18 @@ if (isset($_GET["id"])) {
         <div class="right">
             <ul class="navbutton">
                 <?php
-                if (isset($_SESSION["username"])) {
-                    echo "<li><a href='profile.php' class='link'>Profile</a></li>";
-                    echo "<li><a href='inc/logout.inc.php' class='link'>Log Out</a></li>";
-                } 
-                else {
-                    echo "<li><a href='signup.php' class='link' >Sign Up</a></li>";
-                    echo "<li><a href='login.php' class='link'>Log In</a></li>";
-                }
+                    if (isset($_SESSION["username"])) {
+                ?>
+                    <li><a href='profile.php' class='link'>Profile</a></li>
+                    <li><a href='inc/logout.inc.php' class='link'>Log Out</a></li>
+                <?php
+                    } 
+                    else {
+                ?>
+                    <li><a href='signup.php' class='link' >Sign Up</a></li>
+                    <li><a href='login.php' class='link'>Log In</a></li>
+                <?php
+                    }
                 ?>
             </ul>
         </div>
