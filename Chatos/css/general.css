@@ -13504,3 +13504,17 @@ ul {
       -ms-flex-direction: column;
           flex-direction: column;
 }
+
+.send_chat {
+  text-align: center;
+  padding: 5px;
+}
+
+input.tx .sub {
+  border-radius: 3px;
+  border-color: purple;
+}
+
+input.sub {
+  background-color: rgb(253, 236, 253);
+}

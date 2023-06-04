@@ -29,9 +29,9 @@
                 <div class="offcanvas-body offcanvasgroups justify-content-center">
                     <ul class="navbar-nav justify-content-start ">
                         <div class="burger" >
-                            <form action='#' method='post'>
-                                <input type='text' name='uid' class='text' placeholder='Send chat request...'>
-                                <input type='submit' name='sendInvitation' class='submit' value='Send'>
+                            <form action='#' method='post' class="send_chat">
+                                <input type='text' name='uid' class='text tx' placeholder='Send chat request...'>
+                                <input type='submit' name='sendInvitation' class='submit sub' value='Send'>
                             </form>
                             <p style="text-align: center;">
                                 <?php
@@ -47,28 +47,32 @@
             </div>
         </div>
     </div>
+    <div class="chat">
     <?php
         if (isset($_GET["id"])) {
     ?>
     <div class="chat" style="flex-grow:1;">
-        <div class="chat">
+        <div>
             <?php 
                 $chatgroup->loadMessages($database);
                 $chatgroup->printMessages();
             ?>
         </div>
-        <form action="#" method="post" style="padding-top: 20px;">
-            <input type="text" name="message" placeholder="Aa" class="message">
-            <input type="submit" name="sendMessage" value="Send" class="sendMessage">
+        <form action="#" method="post" class="send_chat" style="padding-top: 20px;">
+            <input type="text" name="message" placeholder="Aa" class="message tx">
+            <input type="submit" name="sendMessage" value="Send" class="sendMessage sub">
         </form>
     </div>
     <?php
         } 
         else {
-            echo 'Please select chatgroup';
+            
+            echo "<p style='text-align:center;'>Please select chatgroup</p>";
         }
     ?>
+    </div>  
 </section>
+
 <?php
     }
 ?>
