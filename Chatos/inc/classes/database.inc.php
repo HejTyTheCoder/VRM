@@ -149,6 +149,16 @@ class Database{
         $stmt->execute(["senderId" => $senderId, "acceptorId" => $acceptorId, "chatGroupId" => $chatGroupId, "text" => $text]);
     }
 
+    public function declineChat($idi){
+        if(!$this->inviteExists($idi)){
+            throw new Exception("Initation does not exist");
+        }
+        $stmt = $this->connection->prepare("DELETE FROM invitations WHERE idi = :idi");
+        if(!$stmt->execute(["idi" => $idi])){
+            throw new Exception("Could not delete invitation");
+        }
+    }
+
     public function acceptChat($idi){
         $stmt = $this->connection->prepare("SELECT idu, idc FROM invitations WHERE idi = :idi");
         $stmt->execute(["idi" => $idi]);
