@@ -24,6 +24,7 @@
         }
         else {
             $idi = $_GET["idi"];
+            $database->declineChat($idi);
             // $database->declineChat($idi);    no function for this yet //
         }
     }
