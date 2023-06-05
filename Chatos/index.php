@@ -5,8 +5,9 @@
         $senderId = $database->getUser($_SESSION["username"])["idu"];
         $acceptorId = $database->getUser($_POST["uid"])["idu"];
         $database->sendInvite($senderId, $acceptorId);
+        header("location: .");
     }
-    if (isset($_POST["sendMessage"])) {
+    else if (isset($_POST["sendMessage"])) {
         if(empty($_POST["message"])) {
             $errorMessage = "You did not write any message.";
         }
@@ -16,8 +17,9 @@
         catch(Exception $e){
             $errorMessage = "Unexpected error.";
         }
+        header("location: .");
     }
-    if (isset($_GET["inviteSubmit"])) {
+    else if (isset($_GET["inviteSubmit"])) {
         if ($_GET["inviteSubmit"] == "Accept") {
             $idi = $_GET["idi"];
             $database->acceptChat($idi);
@@ -25,8 +27,8 @@
         else {
             $idi = $_GET["idi"];
             $database->declineChat($idi);
-            // $database->declineChat($idi);    no function for this yet //
         }
+        header("location: .");
     }
 
     require_once "phtml/index.phtml";
