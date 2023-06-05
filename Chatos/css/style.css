@@ -308,7 +308,7 @@ nav form input.submit {
 .input__icon-wrapper {
 	position: absolute;
 	top: 50%;
-	right: 12px;
+	right: 20px;
 	transform: translateY(-50%);
 	cursor: pointer;
 }
