@@ -17,7 +17,7 @@
         catch(Exception $e){
             $errorMessage = "Unexpected error.";
         }
-        header("location: .");
+        header("location: index.php?id=" . $_SESSION['idc']);
     }
     else if (isset($_GET["inviteSubmit"])) {
         if ($_GET["inviteSubmit"] == "Accept") {
