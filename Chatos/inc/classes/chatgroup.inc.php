@@ -43,6 +43,9 @@ class Chatgroup{
         if($this->directchat == false){
             throw new Exception("This is not a direct chat");
         }
+        if(sizeof($this->users) <= 1){
+            return "Unacepted chat";
+        }
         if($this->users[0]->getId() == $firstIdu){
             return $this->users[1]->getNickname();
         }
