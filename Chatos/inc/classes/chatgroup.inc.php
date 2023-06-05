@@ -7,12 +7,16 @@ class Chatgroup{
     private array $users;
     private array $messages;
 
-    public function __construct(int $idc, string $name = "chatgroup", bool $directchat = false, array $users = array(), array $messages = array()){
+    public function __construct(int $idc, string $name = "chatgroup", bool $directchat = true, array $users = array(), array $messages = array()){
         $this->idc = $idc;
         $this->name = $name;
         $this->directchat = $directchat;
         $this->users = $users;
         $this->messages = $messages;
+    }
+
+    public function isDirectChat(){
+        return $this->directchat;
     }
 
     public function loadMessages(Database $database){
@@ -26,6 +30,24 @@ class Chatgroup{
         $results = $database->getUserList($this->idc);
         foreach($results as $user){
             array_push($this->users, new User($user[0]));
+        }
+        foreach($this->users as $user){
+            $user->loadInformations($database);
+        }
+    }
+
+    public function getSecondUserName(int $firstIdu, Database $database){
+        if(empty($this->users)){
+            $this->loadUsers($database);
+        }
+        if($this->directchat == false){
+            throw new Exception("This is not a direct chat");
+        }
+        if($this->users[0]->getId() == $firstIdu){
+            return $this->users[1]->getNickname();
+        }
+        else{
+            return $this->users[0]->getNickname();
         }
     }
 

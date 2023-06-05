@@ -17,6 +17,21 @@ class User{
         $this->chatgroups = $chatgroups;
     }
 
+    public function getId(){
+        return $this->idu;
+    }
+
+    public function getNickname(){
+        return $this->nickname;
+    }
+
+    public function loadInformations(Database $database){
+        $results = $database->getUserById($this->idu);
+        $this->nickname = $results['nickname'];
+        $this->authority = $results['authority'];
+        $this->description = $results['description'];
+    }
+
     public function loadChatGroups(Database $database){
         $results = $database->getChatList($this->idu);
         foreach($results as $chatgroup){
@@ -24,10 +39,15 @@ class User{
         }
     }
 
-    public function displayChatGroups(){
+    public function displayChatGroups(Database $database){
         echo "<div class='group'>";
         foreach($this->chatgroups as $chatgroup){
-            echo("<a class='chaty' href='index.php?id=".$chatgroup->getId()."'><div class='chaty'>".$chatgroup->getName()."</div></a>");
+            if($chatgroup->isDirectChat()){
+                echo("<a class='chaty' href='index.php?id=".$chatgroup->getId()."'><div class='chaty'>".$chatgroup->getSecondUserName($this->idu, $database)."</div></a>");
+            }
+            else{
+                echo("<a class='chaty' href='index.php?id=".$chatgroup->getId()."'><div class='chaty'>".$chatgroup->getName()."</div></a>");
+            }
         }
         echo "</div>";
     }

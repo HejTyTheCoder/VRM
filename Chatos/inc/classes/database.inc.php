@@ -47,6 +47,15 @@ class Database{
         return $stmt->fetch();
     }
 
+    public function getUserById(int $idu){
+        if(!$this->userIdExists($idu)){
+            throw new Exception("User does not exist");
+        }
+        $stmt = $this->connection->prepare("SELECT idu, nickname, authority, description FROM users WHERE idu = :idu");
+        $stmt->execute(["idu" => $idu]);
+        return $stmt->fetch();
+    }
+
     public function getUserChatAuthority(int $idu, int $idc){
         $stmt = $this->connection->prepare("SELECT authority FROM userchatgroups WHERE idu = :idu and idc = :idc");
         $stmt->execute(["idu" => $idu, "idc" => $idc]);

@@ -1,0 +1,4 @@
+ALTER TABLE `users` CHANGE `description` `description` VARCHAR(3600) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '';
+ALTER TABLE `invitations` CHANGE `text` `text` VARCHAR(3600) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '';
+ALTER TABLE `chatgroups` CHANGE `description` `description` VARCHAR(3600) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '';
+ALTER TABLE `messages` DROP FOREIGN KEY `cons_mes_us`; ALTER TABLE `messages` ADD CONSTRAINT `cons_mes_us` FOREIGN KEY (`idu`) REFERENCES `users`(`idu`) ON DELETE CASCADE ON UPDATE RESTRICT;

@@ -38,7 +38,7 @@
                                     echo "Hi " . $_SESSION["username"] . ".<br>";
                                     //print_r($result);
                                     $user->loadChatGroups($database);
-                                    $user->displayChatGroups();
+                                    $user->displayChatGroups($database);
                                 ?>
                             </p>
                         </div>
