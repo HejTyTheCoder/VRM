@@ -3,14 +3,13 @@
 
     if(isset($_POST["submit"])) {
         $username = $_POST["uid"];
-        $email = $_POST["email"];
         $pwd = $_POST["pwd"];
         $pwd2 = $_POST["pwd2"];
        
         if(empty($username) || empty($pwd) || empty($pwd2)) {
             $errorMessage = "You did not fill in all the fields.";
         }
-        else if(!preg_match("/^[a-zA-Z0-9]*/", $username)) {
+        else if(!preg_match("/[a-zA-Z0-9]/", $username)) {
             $errorMessage = "The username is not valid.";
         }
         else if($database->userExists($username)) {

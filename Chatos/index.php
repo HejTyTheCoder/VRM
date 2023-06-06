@@ -11,7 +11,7 @@
         catch(Exception $e){
             $errorMessage = "Unexpected error.";
         }
-        header("location: index.php?id=" . $_SESSION['idc']);
+        reload();
     }
     else if (isset($_GET["inviteSubmit"])) {
         if ($_GET["inviteSubmit"] == "Accept") {
@@ -27,17 +27,26 @@
             $idi = $_GET["idi"];
             $database->declineChat($idi);
         }
-        header("location: .");
+        reload();
     }
     else if (isset($_POST["sendInvitation"])) {
         $senderId = $database->getUser($_SESSION["username"])["idu"];
         $acceptorId = $database->getUser($_POST["uid"])["idu"];
         $database->sendInvite($senderId, $acceptorId);
-        header("location: .");
+
+        reload();
     }
     else if (isset($_POST["createGroup"])) {
         $database->createChatGroup($_POST["name"], $_SESSION["idu"]);
-        header("location: .");
+        reload();
+    }
+    function reload() {
+        if(isset($_SESSION['idc'])) {
+            header("location: index.php?id=" . $_SESSION['idc']);
+        }
+        else {
+            header("location: .");
+        }
     }
 
     require_once "phtml/index.phtml";
