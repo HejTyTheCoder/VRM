@@ -52,6 +52,18 @@ class User{
         echo "</div>";
     }
 
+    public function hasInvitation(Database $database, int $idi){
+        if(empty($this->invitations)){
+            $this->loadInvitations($database);
+        }
+        foreach($this->invitations as $invitation){
+            if($invitation->getId() == $idi){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function loadInvitations(Database $database){
         $results = $database->getInvitations($this->idu);
         foreach($results as $invitation){
@@ -67,8 +79,8 @@ class User{
             foreach($this->invitations as $invitation){
                 ?>
                 <form action="#" method="get">
-                    <label for="idi" . <?=$invitation->getId()?>><?=$invitation?></label>
-                    <input type="hidden" name="idi" id="idi" . <?=$invitation->getId()?> value=<?=$invitation->getId()?>>
+                    <label><?=$invitation?></label>
+                    <input type="hidden" name="idi" id="idi" value=<?=$invitation->getId()?>>
                     <input type="submit" name="inviteSubmit" value="Decline">
                     <input type="submit" name="inviteSubmit" value="Accept">
                 </form>
