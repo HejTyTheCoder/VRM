@@ -1,13 +1,7 @@
 <?php
     require_once "phtml/header.phtml";
 
-    if (isset($_POST["sendInvitation"])) {
-        $senderId = $database->getUser($_SESSION["username"])["idu"];
-        $acceptorId = $database->getUser($_POST["uid"])["idu"];
-        $database->sendInvite($senderId, $acceptorId);
-        header("location: .");
-    }
-    else if (isset($_POST["sendMessage"])) {
+    if (isset($_POST["sendMessage"])) {
         if(empty($_POST["message"])) {
             $errorMessage = "You did not write any message.";
         }
@@ -28,6 +22,16 @@
             $idi = $_GET["idi"];
             $database->declineChat($idi);
         }
+        header("location: .");
+    }
+    else if (isset($_POST["sendInvitation"])) {
+        $senderId = $database->getUser($_SESSION["username"])["idu"];
+        $acceptorId = $database->getUser($_POST["uid"])["idu"];
+        $database->sendInvite($senderId, $acceptorId);
+        header("location: .");
+    }
+    else if (isset($_POST["createGroup"])) {
+        $database->createChatGroup($_POST["name"], $_SESSION["idu"]);
         header("location: .");
     }
 
