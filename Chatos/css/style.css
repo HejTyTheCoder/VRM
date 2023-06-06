@@ -364,3 +364,15 @@ a.chaty:hover{
     }
 
 }
+.tx .sub{
+    border: none;
+    margin: 3px;
+}
+input.sub{
+    background-color: rgb(92 0 124);
+    color: white;
+    margin: 3px;
+}
+.createChatGroups{
+
+}
