@@ -29,17 +29,32 @@
                 <div class="offcanvas-body offcanvasgroups justify-content-center">
                     <ul class="navbar-nav justify-content-start ">
                         <div class="burger" >
-                            <button class="createChatGroups">Create new chat</button>
-                            <form action='#' method='post' class="send_chat">
-                                <input type='text' name='uid' class='text tx' placeholder='Username'>
-                                <input type='text' name='message' class='text tx' placeholder='Message (optional)'><br>
-                                <input type='submit' name='sendInvitation' class='submit sub' value='Send'>
+                        
+                        <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle createChatGroups" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  Create new chat
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <form action='#' method='post' class="send_chat">
+                                <input type='text' name='uid' class='text tx dropdown-item' placeholder='Username'>
+                                <input type='text' name='message' class='text tx dropdown-item' placeholder='Message (optional)'><br>
+                                <input type='submit' name='sendInvitation' class='submit sub dropdown-item' value='Send'>
                             </form>
-                            <button class="createChatGroups">Create new group</button>
+  </ul>
+
+    </div>
+  <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle createChatGroups" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    Create new group</button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <form action='#' method='post' class="send_chat">
-                                <input type='text' name='name' class='text tx' placeholder='Name'>
-                                <input type='submit' name='createGroup' class='submit sub' value='Create'>
+                                <input type='text' name='name' class='text tx dropdown-item' placeholder='Name'>
+                                <input type='submit' name='createGroup' class='submit sub dropdown-item' value='Create'>
                             </form>
+    </ul>
+</div>
+
+                           
                             <p style="text-align: center;">
                                 <?php
                                     echo "Hi " . $_SESSION["username"] . ".<br>";
@@ -78,6 +93,7 @@
         }
     ?>
     </div>  
+    
 </section>
 
 <?php
