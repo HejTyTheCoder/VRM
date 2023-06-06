@@ -29,11 +29,16 @@
                 <div class="offcanvas-body offcanvasgroups justify-content-center">
                     <ul class="navbar-nav justify-content-start ">
                         <div class="burger" >
-                            <h2>Create new chat</h2>
+                            <button class="createChatGroups">Create new chat</button>
                             <form action='#' method='post' class="send_chat">
                                 <input type='text' name='uid' class='text tx' placeholder='Username'>
                                 <input type='text' name='message' class='text tx' placeholder='Message (optional)'><br>
                                 <input type='submit' name='sendInvitation' class='submit sub' value='Send'>
+                            </form>
+                            <button class="createChatGroups">Create new group</button>
+                            <form action='#' method='post' class="send_chat">
+                                <input type='text' name='name' class='text tx' placeholder='Name'>
+                                <input type='submit' name='createGroup' class='submit sub' value='Create'>
                             </form>
                             <p style="text-align: center;">
                                 <?php
