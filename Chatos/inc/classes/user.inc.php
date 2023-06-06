@@ -52,6 +52,18 @@ class User{
         echo "</div>";
     }
 
+    public function hasInvitation(Database $database, int $idi){
+        if(empty($this->invitations)){
+            $this->loadInvitations($database);
+        }
+        foreach($this->invitations as $invitation){
+            if($invitation->getId() == $idi){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function loadInvitations(Database $database){
         $results = $database->getInvitations($this->idu);
         foreach($results as $invitation){

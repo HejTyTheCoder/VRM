@@ -22,7 +22,12 @@
     else if (isset($_GET["inviteSubmit"])) {
         if ($_GET["inviteSubmit"] == "Accept") {
             $idi = $_GET["idi"];
-            $database->acceptChat($idi);
+            if($user->hasInvitation($database, $idi)){ 
+                $database->acceptChat($idi);
+            }
+            else{
+                throw new Exception("You are not allowed to accept this invitation");
+            }
         }
         else {
             $idi = $_GET["idi"];
