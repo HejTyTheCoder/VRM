@@ -81,8 +81,8 @@ class User{
                 <form action="#" method="get">
                     <label><?=$invitation?></label>
                     <input type="hidden" name="idi" id="idi" value=<?=$invitation->getId()?>>
-                    <input type="submit" name="inviteSubmit" value="Decline">
-                    <input type="submit" name="inviteSubmit" value="Accept">
+                    <input type="submit" class="btn btn-secondary sub dec_ac" name="inviteSubmit" value="Decline">
+                    <input type="submit" class="btn btn-secondary sub dec_ac" name="inviteSubmit" value="Accept">
                 </form>
                 <?php
             }

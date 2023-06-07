@@ -137,9 +137,7 @@ div.chat input.message {
     margin-left: 10px;
 }
 
-div.chat input.sendMessage {
-    width: 50px;
-}
+
 
 
 div.error {
@@ -364,16 +362,4 @@ a.chaty:hover{
     }
 
 }
-.tx .sub{
-    border: none;
-    margin: 3px;
-}
-input.sub{
-    background-color: rgb(92 0 124);
-    color: white;
-    margin: 3px;
-}
-.createChatGroups{
-    background-color: #5c007c;
-    margin: 3px;
-}
+
