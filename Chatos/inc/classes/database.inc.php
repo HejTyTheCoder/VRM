@@ -24,7 +24,7 @@ class Database{
     }
 
     public function getChatList(int $idu){
-        $stmt = $this->connection->prepare("SELECT c.idc, c.name from userchatgroups uc join chatgroups c on(uc.idc = c.idc) where uc.idu = :idu");
+        $stmt = $this->connection->prepare("SELECT DISTINCT c.idc, c.name, c.directchat from userchatgroups uc join chatgroups c on(uc.idc = c.idc) where uc.idu = :idu");
         $stmt->execute(["idu" => $idu]);
         return $stmt->fetchAll();
     }
@@ -151,8 +151,7 @@ class Database{
     
     public function sendInvite(int $senderId, int $acceptorId, int $chatGroupId = null, string $text = null){
         if($chatGroupId == null){
-            $chatGroupId = $this->createDirectChatGroup("DirectChatgroup", $senderId);
-            
+            $chatGroupId = $this->createDirectChatGroup("DirectChatgroup", $senderId); 
         }
         $stmt = $this->connection->prepare("INSERT INTO invitations (sender, idu, idc, text) VALUES (:senderId, :acceptorId, :chatGroupId, :text)");
         $stmt->execute(["senderId" => $senderId, "acceptorId" => $acceptorId, "chatGroupId" => $chatGroupId, "text" => $text]);

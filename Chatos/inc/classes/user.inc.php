@@ -35,7 +35,7 @@ class User{
     public function loadChatGroups(Database $database){
         $results = $database->getChatList($this->idu);
         foreach($results as $chatgroup){
-            array_push($this->chatgroups, new Chatgroup($chatgroup[0], $chatgroup[1]));
+            array_push($this->chatgroups, new Chatgroup($chatgroup[0], $chatgroup[1], $chatgroup[2]));
         }
     }
 

@@ -30,10 +30,13 @@
         reload();
     }
     else if (isset($_POST["sendInvitation"])) {
-        $senderId = $database->getUser($_SESSION["username"])["idu"];
-        $acceptorId = $database->getUser($_POST["uid"])["idu"];
-        $database->sendInvite($senderId, $acceptorId);
-
+        if($acceptorId = $database->getUser($_POST["uid"])["idu"]) {
+            $senderId = $database->getUser($_SESSION["username"])["idu"];
+            $database->sendInvite($senderId, $acceptorId, null, $_POST["message"]);
+        }
+        else {
+            $errorMessage = "This user does not exist.";
+        }
         reload();
     }
     else if (isset($_POST["createGroup"])) {
