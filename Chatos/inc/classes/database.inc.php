@@ -57,6 +57,12 @@ class Database{
         return $stmt->fetch();
     }
 
+    public function getChatById(int $idc) {
+        $stmt = $this->connection->prepare("SELECT idc, name, directchat from chatgroups where idc = :idc");
+        $stmt->execute(["idc" => $idc]);
+        return $stmt->fetch();
+    }
+
     public function getUserChatAuthority(int $idu, int $idc){
         $stmt = $this->connection->prepare("SELECT authority FROM userchatgroups WHERE idu = :idu and idc = :idc");
         $stmt->execute(["idu" => $idu, "idc" => $idc]);
@@ -121,6 +127,20 @@ class Database{
     public function userExists(string $nickname){
         $stmt = $this->connection->prepare("SELECT idu from users where nickname = :nickname");
         $stmt->execute(["nickname" => $nickname]);
+        if(sizeof($stmt->fetchAll()) == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public function isUserInGroup(int $idu, int $idc) {
+        $stmt = $this->connection->prepare(
+            "SELECT idu from userchatgroups where idu = :idu and idc = :idc
+            union
+            SELECT idu from invitations where idu = :idu and idc = :idc");
+        $stmt->execute(["idu" => $idu, "idc" => $idc, "idu" => $idu, "idc" => $idc]);
         if(sizeof($stmt->fetchAll()) == 0){
             return false;
         }
