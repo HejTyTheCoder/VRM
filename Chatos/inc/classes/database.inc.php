@@ -216,7 +216,6 @@ class Database{
         if(password_verify($password, $stmt->fetch()[0])){
             $_SESSION["username"] = $nickname;
             $_SESSION["idu"] = $this->getUser($_SESSION["username"])["idu"];
-            $_SESSION["newMessage"] = 0;
             return true;
         }
         return false;
