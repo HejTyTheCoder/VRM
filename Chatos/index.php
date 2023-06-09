@@ -3,13 +3,13 @@
 
     if (isset($_POST["sendMessage"])) {
         if(empty($_POST["message"])) {
-            $errorMessage = "You did not write any message.";
+            $_SESSION["errorMessage"] = "You did not write any message.";
         }
         try{
             $database->sendMessage($_SESSION['idu'], $_SESSION['idc'], $_POST['message']);
         }
         catch(Exception $e){
-            $errorMessage = "Unexpected error.";
+            $_SESSION["errorMessage"] = "Unexpected error.";
         }
         reload();
     }
@@ -29,13 +29,28 @@
         }
         reload();
     }
-    else if (isset($_POST["sendInvitation"])) {
+    else if (isset($_POST["sendChatInvitation"])) {
         if($acceptorId = $database->getUser($_POST["uid"])["idu"]) {
             $senderId = $database->getUser($_SESSION["username"])["idu"];
             $database->sendInvite($senderId, $acceptorId, null, $_POST["message"]);
         }
         else {
-            $errorMessage = "This user does not exist.";
+            $_SESSION["errorMessage"] = "This user does not exist.";
+        }
+        reload();
+    }
+    else if (isset($_POST["sendGroupInvitation"])) {
+        if($acceptorId = $database->getUser($_POST["uid"])["idu"]) {
+            if(!$database->isUserInGroup($acceptorId, $_GET["id"])) {
+                $senderId = $database->getUser($_SESSION["username"])["idu"];
+                $database->sendInvite($senderId, $acceptorId, $_GET["id"], $_POST["message"]);
+            }
+            else {
+                $_SESSION["errorMessage"] = "This user is already in.";
+            }
+        }
+        else {
+            $_SESSION["errorMessage"] = "This user does not exist.";
         }
         reload();
     }

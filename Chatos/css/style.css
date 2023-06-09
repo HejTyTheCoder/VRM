@@ -110,12 +110,11 @@ main.chat{
 
 }
 div.chat {
+    position: relative;
     margin: 25px;
     padding: 3%;
     flex: 1;
     background-color: rgb(182 61 234 / 25%);
-   
-
 }
 
 div.chat form {
@@ -358,7 +357,6 @@ a.chaty:hover{
  
     div.chat{
         flex: 1;
-
     }
 
 }
