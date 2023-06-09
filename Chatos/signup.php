@@ -28,6 +28,7 @@
         }
     }
 
+    require_once "phtml/header.php";
     require_once "phtml/signup.phtml";
     require_once "phtml/footer.phtml";
 ?>
