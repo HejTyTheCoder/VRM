@@ -5,9 +5,10 @@ class Database{
     private $dbPassword;
     private $dbName;
     private $connection;
+    //Vygral
+    //O1S254sLsvnY34/Uks*+
 
-
-    public function __construct(string $serverName = "localhost", string $dbUserName = "root", string $dbPassword = "", string $dbName = "Chatos"){
+    public function __construct(string $serverName = "localhost", string $dbUserName = "id20887925_vygral", string $dbPassword = "O1S254sLsvnY34/Uks*+", string $dbName = "id20887925_chatos"){
         //error is thrown if connection is not established
         $this->connection = new PDO("mysql:host=$serverName;dbname=$dbName", $dbUserName, $dbPassword);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
