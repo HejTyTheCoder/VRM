@@ -20,9 +20,20 @@ class Chatgroup{
     }
 
     public function loadMessages(Database $database){
+        $this->loadUsers($database);
         $results = $database->getMessages($this->idc, 100);
         foreach ($results as $message) {
-            array_push($this->messages, new Message($message[0], $message[1], $this, $message[2], new DateTime($message[3])));
+            $mess = new Message($message[0], $message[1], $this, $message[2], new DateTime($message[3]));
+            $idu = $message['idu'];
+            foreach($this->users as $user){
+                if($user->getId() == $idu){
+                    $mess->loadUser($user);
+                }
+                else{
+                    continue;
+                }
+            }
+            array_push($this->messages, $mess);
         }
     }
 
@@ -56,7 +67,18 @@ class Chatgroup{
 
     public function printMessages(){
         //Print messages here
+        $lastUser = null;
         foreach($this->messages as $message){
+            if($lastUser!= null){
+                if($lastUser != $message->getUser()){
+                    $lastUser = $message->getUser();
+                    echo $lastUser->getNickname();
+                }
+            }
+            else{
+                $lastUser = $message->getUser();
+                echo $lastUser->getNickname();
+            }
             //print individual messages here
             echo "<div class='bunka'>";
             echo "<p class=vbunce>";

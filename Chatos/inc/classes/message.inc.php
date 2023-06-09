@@ -15,6 +15,10 @@ class Message{
         $this->time = $time;
     }
 
+    public function getUser(){
+        return $this->user;
+    }
+
     public function loadUser(User $user){
         $this->user = $user;
     }
