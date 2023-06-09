@@ -70,7 +70,7 @@ if (isset($errorMessage)) {
         if (isset($_GET["id"])) {
     ?>
     <div class="chat" style="flex-grow:1;">
-        <div>
+        <div style="height: 500px; overflow:auto">
             <?php 
                 $chatgroup->loadMessages($database);
                 $chatgroup->printMessages();
