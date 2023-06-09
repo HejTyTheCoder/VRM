@@ -51,12 +51,12 @@ if (isset($_SESSION["errorMessage"])) {
                                     </form>
                                 </ul>
                             </div>   
-                            <div style="text-align: center; height: 500px; overflow:auto">
+                            <p style="text-align: center;">
                                 <?php
                                     $user->loadChatGroups($database);
                                     $user->displayChatGroups($database);
                                 ?>
-                            </div>
+                            </p>
                         </div>
                     </ul>
                 </div>
@@ -80,41 +80,26 @@ if (isset($_SESSION["errorMessage"])) {
                 </form>
             </ul>
         </div>
-        <?php
-                }
-        ?>
         <div class="chat" style="flex-grow:1;">
-            <div style="height: 500px; overflow:auto" id="messages">
+            <div style="height: 500px; overflow:auto">
                 <?php 
                     $chatgroup->loadMessages($database);
                     $chatgroup->printMessages();
                 ?>
-                <script>
-                    document.getElementById("messages").scrollTo(0, document.getElementById("messages").scrollHeight);
-                </script>
             </div>
             <form action="#" method="post" class="send_chat" style="padding-top: 20px;">
-                <input type="text" name="message" placeholder="Aa" class="message tx" required>
+                <input type="text" name="message" placeholder="Aa" class="message tx">
                 <input type="submit" name="sendMessage" value="Send" class="sendMessage sub btn btn-secondary">
             </form>
         </div>
         <?php
+                }
             } 
             else {
                 echo "<p style='text-align:center;'>Please select chatgroup</p>";
             }
         ?>
     </div>
-    <?php
-        if($_SESSION["newMessage"] == 1) {
-    ?>
-    <script>
-        window.scrollTo(0, document.documentElement.scrollHeight - window.innerHeight - 72);
-    </script>
-    <?php
-            //$_SESSION["newMessage"] = 0;
-        }
-    ?>
 </section>
 <?php
     }

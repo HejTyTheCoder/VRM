@@ -2,13 +2,15 @@
     require_once "phtml/header.phtml";
 
     if (isset($_POST["sendMessage"])) {
+        if(empty($_POST["message"])) {
+            $_SESSION["errorMessage"] = "You did not write any message.";
+        }
         try{
             $database->sendMessage($_SESSION['idu'], $_SESSION['idc'], $_POST['message']);
         }
         catch(Exception $e){
             $_SESSION["errorMessage"] = "Unexpected error.";
         }
-        $_SESSION["newMessage"] = 1;
         reload();
     }
     else if (isset($_GET["inviteSubmit"])) {
