@@ -1,8 +1,8 @@
 <?php
-if (isset($_SESSION["errorMessage"])) {
+if (isset($errorMessage)) {
     ?>
     <div class="errorMessage">
-        <?= $_SESSION["errorMessage"] ?>
+        <?= $errorMessage ?>
     </div>
     <?php
 }
@@ -35,8 +35,8 @@ if (isset($_SESSION["errorMessage"])) {
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <form action='#' method='post' class="send_chat">
                                         <input type='text' name='uid' class='text tx dropdown-item' placeholder='Username' required>
-                                        <input type='text' name='message' class='text tx dropdown-item' placeholder='Message'>
-                                        <input type='submit' name='sendChatInvitation' class='btn btn-secondary submit sub dropdown-item' value='Send'>
+                                        <input type='text' name='message' class='text tx dropdown-item' placeholder='Message (optional)'><br>
+                                        <input type='submit' name='sendInvitation' class='btn btn-secondary submit sub dropdown-item' value='Send'>
                                     </form>
                                 </ul>
                             </div>
@@ -44,7 +44,7 @@ if (isset($_SESSION["errorMessage"])) {
                                 <button class="btn btn-secondary dropdown-toggle createChatGroups" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                                     new group
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <form action='#' method='post' class="send_chat">
                                         <input type='text' name='name' class='text tx dropdown-item' placeholder='Group name' required>
                                         <input type='submit' name='createGroup' class='btn btn-secondary submit sub dropdown-item' value='Create'>
@@ -53,6 +53,8 @@ if (isset($_SESSION["errorMessage"])) {
                             </div>   
                             <p style="text-align: center;">
                                 <?php
+                                    echo "Hi " . $_SESSION["username"] . ".<br>";
+                                    //print_r($result);
                                     $user->loadChatGroups($database);
                                     $user->displayChatGroups($database);
                                 ?>
@@ -64,43 +66,32 @@ if (isset($_SESSION["errorMessage"])) {
         </div>
     </div>
     <div class="chat">
-        <?php
-            if (isset($_GET["id"])) {
-                if (!$chatgroup->isDirectChat()) {
-        ?>
-        <div class="dropdown" style="position: absolute; top: 2%; right: 1%;">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                +
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                <form action='#' method='post' class="send_chat">
-                    <input type='text' name='uid' class='text tx dropdown-item' placeholder='Username' required>
-                    <input type='text' name='message' class='text tx dropdown-item' placeholder='Message'>
-                    <input type='submit' name='sendGroupInvitation' class='btn btn-secondary submit sub dropdown-item' value='Send'>
-                </form>
-            </ul>
+    <?php
+        if (isset($_GET["id"])) {
+    ?>
+    <div class="chat" style="flex-grow:1;">
+        <div style="height: 500px; overflow:auto">
+            <?php 
+                $chatgroup->loadMessages($database);
+                $chatgroup->printMessages();
+            ?>
         </div>
-        <div class="chat" style="flex-grow:1;">
-            <div style="height: 500px; overflow:auto">
-                <?php 
-                    $chatgroup->loadMessages($database);
-                    $chatgroup->printMessages();
-                ?>
-            </div>
-            <form action="#" method="post" class="send_chat" style="padding-top: 20px;">
-                <input type="text" name="message" placeholder="Aa" class="message tx">
-                <input type="submit" name="sendMessage" value="Send" class="sendMessage sub btn btn-secondary">
-            </form>
-        </div>
-        <?php
-                }
-            } 
-            else {
-                echo "<p style='text-align:center;'>Please select chatgroup</p>";
-            }
-        ?>
+        <form action="#" method="post" class="send_chat" style="padding-top: 20px;">
+            <input type="text" name="message" placeholder="Aa" class="message tx">
+            <input type="submit" name="sendMessage" value="Send" class="sendMessage sub btn btn-secondary">
+        </form>
     </div>
+    <?php
+        } 
+        else {
+            
+            echo "<p style='text-align:center;'>Please select chatgroup</p>";
+        }
+    ?>
+    </div>  
+    
 </section>
+
 <?php
     }
 ?>

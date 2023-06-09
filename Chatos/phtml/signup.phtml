@@ -2,10 +2,10 @@
     <h1 class="login-title">Create account</h1>
     <form action="#" method = "post">
     <?php   
-            if(isset($_SESSION["errorMessage"])) {
+            if(isset($errorMessage)) {
         ?>
         <div class="errorMessage">
-            <?= $_SESSION["errorMessage"] ?>
+            <?= $errorMessage ?>
         </div>
         <?php
             }

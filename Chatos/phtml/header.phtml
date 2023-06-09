@@ -15,7 +15,6 @@ if (isset($_SESSION["username"])) {
 }
 if (isset($_GET["id"])) {
     $_SESSION["idc"] = $_GET["id"];
-    $result = $database->getChatById($_SESSION["idc"]);
-    $chatgroup = new Chatgroup($_SESSION["idc"], "chatgroup", $result["directchat"]);
+    $chatgroup = new Chatgroup($_SESSION["idc"], "chatgroup");
 }
 ?>
