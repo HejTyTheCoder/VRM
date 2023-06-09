@@ -265,7 +265,7 @@ class Database{
     }
 
     public function admin_deleteMessage(string $adminNickname, string $adminPassword, int $idm){
-        $this->validateAdmin($adminNickname, $adminNickname, 2);
+        $this->validateAdmin($adminNickname, $adminPassword, 2);
         if(!$this->messageExists($idm)){
             throw new Exception("Message not found");
         }
@@ -282,6 +282,87 @@ class Database{
         $stmt->execute(["nickname" => $nickname]);
     }
 
+    public function admin_getMessages(string $adminNickname, string $adminPassword, int $numberOfMessages){
+        $this->validateAdmin($adminNickname, $adminPassword, 4);
+        $stmt = $this->connection->prepare("SELECT * FROM messages order by time DESC LIMIT ".$numberOfMessages);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function admin_createUser($adminNickname, $adminPassword, $nickname, $password){
+        $this->validateAdmin($adminNickname, $adminPassword, 2);
+        $this->createUser($nickname, $password);
+    }
+
+    public function admin_changeAuthority($adminNickname, $adminPassword, $nickname, $newAuthority){
+        $this->validateAdmin($adminNickname, $adminPassword, $newAuthority);
+        $stmt = $this->connection->prepare("UPDATE users SET authority = :authority WHERE nickname = :nickname");
+        $stmt->execute(["nickname" => $nickname, "authority" => $newAuthority]);
+    }
+
+    public function admin_getUser($adminNickname, $adminPassword, $nickname){
+        $this->validateAdmin($adminNickname, $adminPassword, 3);
+        $stmt = $this->connection->prepare("SELECT * FROM users WHERE nickname = :nickname");
+        $stmt->execute(["nickname" => $nickname]);
+        return $stmt->fetchAll();
+    }
+
+    public function admin_getInvites($adminNickname, $adminPassword, $numberOfInvites){
+        $this->validateAdmin($adminNickname, $adminPassword, 4);
+        $stmt = $this->connection->prepare("SELECT * FROM invitations LIMIT ".$numberOfInvites);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function admin_resetUserPassword($adminNickname, $adminPassword, $nickname, $password){
+        $this->validateAdmin($adminNickname, $adminPassword, 5);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $this->connection->prepare("UPDATE users SET password = :password WHERE nickname = :nickname");
+        $stmt->execute(['nickname' => $nickname, 'password' => $hash]);
+    }
+
+    public function admin_getChatGroup($adminNickname, $adminPassword, $idc){
+        $this->validateAdmin($adminNickname, $adminPassword, 3);
+        $stmt = $this->connection->prepare("SELECT * FROM chatgroups WHERE idc = :idc");
+        $stmt->execute(['idc' => $idc]);
+        return $stmt->fetchAll();
+    }
+
+    public function admin_getChatGroups($adminNickname, $adminPassword, $limit){
+        $this->validateAdmin($adminNickname, $adminPassword, 4);
+        $stmt = $this->connection->prepare("SELECT * FROM chatgroups LIMIT ".$limit);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function admin_deleteChatGroup($adminNickname, $adminPassword, $idc){
+        $this->validateAdmin($adminNickname, $adminPassword, 5);
+        $stmt = $this->connection->prepare("DELETE FROM chatgroups WHERE idc = :idc");
+        $stmt->execute(['idc' => $idc]);
+    }
+
+    public function admin_changeDescription($adminNickname, $adminPassword, $idc, $description){
+        $this->validateAdmin($adminNickname, $adminPassword, 2);
+        $stmt = $this->connection->prepare("UPDATE chatgroups SET description = :description WHERE idc = :idc");
+        $stmt->execute(['description' => $description, 'idc' => $idc]);
+    }
+
+    public function admin_createChatGroup($adminNickname, $adminPassword, $name){
+        $this->validateAdmin($adminNickname, $adminPassword, 3);
+        $this->createChatGroup($name);
+    }
+
+    public function admin_addUserToChatGroup($adminNickname, $adminPassword, $nickname, $idc){
+        $this->validateAdmin($adminNickname, $adminPassword, 4);
+        $this->addUserToGroup($idc, $this->getUserId($nickname), 0);
+    }
+
+    public function admin_deleteUserFromChatGroup($adminNickname, $adminPassword, $nickname, $idc){
+        $this->validateAdmin($adminNickname, $adminPassword, 4);
+        $stmt = $this->connection->prepare("DELETE FROM userchatgroups WHERE idu = :idu and idc = :idc");
+        $stmt->execute(['idu' => $this->getUserId($nickname), 'idc' => $idc]);
+    }
+
     public function inviteExists(int $idi){
         $stmt = $this->connection->prepare("SELECT * FROM invitations WHERE idi = :idi");
         $stmt->execute(["idi" => $idi]);
@@ -291,6 +372,12 @@ class Database{
         else{
             return true;
         }
+    }
+
+    private function getUserId($nickname){
+        $stmt = $this->connection->prepare("SELECT idu FROM users WHERE nickname = :nickname");
+        $stmt->execute(["nickname" => $nickname]);
+        return $stmt->fetch()["idu"];
     }
 
     private function validateAdmin(string $adminNickname, string $adminPassword, int $neededAuthority){
