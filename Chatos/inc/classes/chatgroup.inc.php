@@ -72,12 +72,20 @@ class Chatgroup{
             if($lastUser!= null){
                 if($lastUser != $message->getUser()){
                     $lastUser = $message->getUser();
-                    echo $lastUser->getNickname();
+                   
+                echo "<span  class='user_chat'>";
+             
+                echo $lastUser->getNickname();
+                echo "</span>";
                 }
             }
             else{
                 $lastUser = $message->getUser();
+
+                echo "<span  class='user_chat'>";
+             
                 echo $lastUser->getNickname();
+                echo "</span>";
             }
             //print individual messages here
             echo "<div class='bunka'>";
