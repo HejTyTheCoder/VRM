@@ -19,7 +19,7 @@
         }
     }
 
-    require_once "phtml/header.php";
+    require_once "phtml/header_html.phtml";
     require_once "phtml/login.phtml";
     require_once "phtml/footer.phtml";
 ?>

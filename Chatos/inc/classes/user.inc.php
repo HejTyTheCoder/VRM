@@ -29,7 +29,12 @@ class User{
         $results = $database->getUserById($this->idu);
         $this->nickname = $results['nickname'];
         $this->authority = $results['authority'];
-        $this->description = $results['description'];
+        if($results['description'] == null){
+            $this->description = "";
+        }
+        else{
+            $this->description = $results['description'];
+        }
     }
 
     public function loadChatGroups(Database $database){
