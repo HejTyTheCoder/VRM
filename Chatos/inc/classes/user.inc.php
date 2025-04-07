@@ -72,7 +72,8 @@ class User{
     public function loadInvitations(Database $database){
         $results = $database->getInvitations($this->idu);
         foreach($results as $invitation){
-            array_push($this->invitations, new Invitation($invitation["idi"], new User($invitation["sender"]), $this, new Chatgroup($invitation["idc"]), $invitation["text"]));
+            array_push($this->invitations, new Invitation($invitation["idi"], new User($invitation["sender"], 
+            $database->getUserById($invitation["sender"])["nickname"]), $this, new Chatgroup($invitation["idc"]), $invitation["text"]));
         }
     }
 

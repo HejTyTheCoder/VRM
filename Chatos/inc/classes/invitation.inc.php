@@ -22,10 +22,10 @@ class Invitation{
 
     public function __toString(){
         if($this->text == ""){
-            return($this->chatgroup->getName());
+            return($this->sender->getNickname());
         }
         else{
-            return($this->chatgroup->getName().": ".$this->text);
+            return($this->sender->getNickname().": ".$this->text);
         }
     }
 

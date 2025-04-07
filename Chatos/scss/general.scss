@@ -1,85 +1,79 @@
-
-
 @import "../bootstrap-5.3.0/scss/bootstrap.scss";
 
-
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/*
-    Created on : 2. 6. 2023, 14:45:02
-    Author     : uzivatel
-*/
-
-.navigation{
+.navigation {
     max-width: 400px;
-    @media only screen and (min-width: 1024px){
 
+    @media only screen and (min-width: 1024px) {
         margin: 25px;
         padding: 3%;
         flex: 1;
         background-color: rgb(182 61 234 / 25%);
     }
-    
 }
-.burger{
+
+.burger {
     width: 100%;
 }
-.offcanvasgroups{
-    @media only screen and (max-width: 1024px){
+
+.offcanvasgroups {
+    @media only screen and (max-width: 1024px) {
         padding: 3%;
         flex: 1;
         background-color: rgb(182 61 234 / 25%);
     }
 }
-.navbar-toggler{
-    @media only screen and (max-width: 1024px){
-       
+
+.navbar-toggler {
+    @media only screen and (max-width: 1024px) {
         background-color: white;
     }
 }
-ul{
+
+ul {
     margin: initial;
-   
 }
-.navbutton li{
+
+.navbutton li {
    display: flex;
    justify-content: center;
    flex-direction: column;
 }
-.send_chat
-{
+
+.send_chat {
     text-align: center;
     padding: 5px;
 }
-input.tx .sub{
+
+input.tx .sub {
     
     border-radius: 3px;
     border-color: purple;
 }
-input.sub{
+
+input.sub {
     background-color: rgb(92 0 124);
     color: white;
 }
-.tx .sub{
+
+.tx .sub {
     border: none;
     margin: 3px;
 }
-input.sub{
+
+input.sub {
     background-color: rgb(92 0 124);
     color: white;
   
 }
-.createChatGroups{
 
+.createChatGroups {
     margin: 3px;
 }
-.btn 
-{
+
+.btn {
     background-color: rgb(92 0 124);
 }
-.dec_ac{
+
+.dec_ac {
     margin: 0 10px;
 }

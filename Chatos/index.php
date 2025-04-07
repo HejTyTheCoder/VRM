@@ -5,13 +5,15 @@
         if(empty($_POST["message"])) {
             $errorMessage = "You did not write any message.";
         }
-        try{
-            $database->sendMessage($_SESSION['idu'], $_SESSION['idc'], $_POST['message']);
+        else {
+            try{
+                $database->sendMessage($_SESSION['idu'], $_SESSION['idc'], $_POST['message']);
+            }
+            catch(Exception $e){
+                $errorMessage = "Unexpected error.";
+            }
+            reload();
         }
-        catch(Exception $e){
-            $errorMessage = "Unexpected error.";
-        }
-        reload();
     }
     else if (isset($_GET["inviteSubmit"])) {
         if ($_GET["inviteSubmit"] == "Accept") {

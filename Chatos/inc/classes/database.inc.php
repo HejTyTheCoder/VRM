@@ -5,11 +5,8 @@ class Database{
     private $dbPassword;
     private $dbName;
     private $connection;
-    //Vygral
-    //O1S254sLsvnY34/Uks*+
 
-    public function __construct(string $serverName = "localhost", string $dbUserName = "id20887925_vygral", string $dbPassword = "O1S254sLsvnY34/Uks*+", string $dbName = "id20887925_chatos"){
-    //public function __construct(string $serverName = "localhost", string $dbUserName = "root", string $dbPassword = "", string $dbName = "chatos"){
+    public function __construct(string $serverName = "localhost", string $dbUserName = "root", string $dbPassword = "", string $dbName = "chatos"){
 
         //error is thrown if connection is not established
         $this->connection = new PDO("mysql:host=$serverName;dbname=$dbName", $dbUserName, $dbPassword);
@@ -154,7 +151,7 @@ class Database{
     
     public function sendInvite(int $senderId, int $acceptorId, int $chatGroupId = null, string $text = null){
         if($chatGroupId == null){
-            $chatGroupId = $this->createDirectChatGroup("DirectChatgroup", $senderId); 
+            $chatGroupId = $this->createDirectChatGroup("DirectChat", $senderId); 
         }
         $stmt = $this->connection->prepare("INSERT INTO invitations (sender, idu, idc, text) VALUES (:senderId, :acceptorId, :chatGroupId, :text)");
         $stmt->execute(["senderId" => $senderId, "acceptorId" => $acceptorId, "chatGroupId" => $chatGroupId, "text" => $text]);
@@ -416,11 +413,4 @@ class Database{
     }
 
 }
-
-//testing functions
-/*
-$database = new Database();
-//print_r($database->getChatList(1));
-$database->createUser("TestUser", "heslo1234");
-*/
 ?>

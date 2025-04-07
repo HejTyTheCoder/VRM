@@ -66,7 +66,6 @@ class Chatgroup{
     }
 
     public function printMessages(){
-        //Print messages here
         $lastUser = null;
         foreach($this->messages as $message){
             if($lastUser!= null){
@@ -87,7 +86,6 @@ class Chatgroup{
                 echo $lastUser->getNickname();
                 echo "</span>";
             }
-            //print individual messages here
             echo "<div class='bunka'>";
             echo "<p class=vbunce>";
             echo $message->getText();

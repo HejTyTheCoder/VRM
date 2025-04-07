@@ -53,7 +53,8 @@ if (isset($errorMessage)) {
                             </div>   
                             <p style="text-align: center;">
                                 <?php
-                                    echo "Hi " . $_SESSION["username"] . ".<br>";
+                                    echo "Hi " . $_SESSION["username"] . "!<br>";
+                                    echo "Your chats:<br>";
                                     //print_r($result);
                                     $user->loadChatGroups($database);
                                     $user->displayChatGroups($database);
@@ -83,8 +84,7 @@ if (isset($errorMessage)) {
     </div>
     <?php
         } 
-        else {
-            
+        else { 
             echo "<p style='text-align:center;'>Please select chatgroup</p>";
         }
     ?>

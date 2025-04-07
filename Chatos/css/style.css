@@ -13,6 +13,7 @@ body {
     border-radius: 25px;
     background: white;
 }
+
 h1.login-title {
     color: #666;
     margin: 0px auto 25px;
@@ -20,6 +21,7 @@ h1.login-title {
     font-weight: 300;
     text-align: center;
 }
+
 .login-input {
     font-size: 15px;
     border: 1px solid #ccc;
@@ -29,6 +31,7 @@ h1.login-title {
     border-radius: 10px;
     width: calc(100% - 23px);
 }
+
 .login-input:focus {
     border-color:#6e8095;
     outline: none;
@@ -50,10 +53,12 @@ h1.login-title {
     cursor: pointer;
     transition: outline-offset .25s;
 }
-.login-button:hover,.login-button:focus{
+
+.login-button:hover,.login-button:focus {
     outline-offset: 3px;
 }
-.login-button:is(:hover, :focus){
+
+.login-button:is(:hover, :focus) {
     outline-offset: 3px;
 }
 
@@ -92,7 +97,6 @@ nav ul a {
 
 nav ul a:hover {
     color: whitesmoke;
-
 }
 
 nav a.backArrow {
@@ -104,41 +108,33 @@ nav a.backArrow {
 nav a.backArrow:hover {
     color: rgb(182, 61, 234);
 }
+
 main.chat{
     display: flex;
     flex-direction: column;
-
 }
+
 div.chat {
     margin: 25px;
     padding: 3%;
     flex: 1;
     background-color: rgb(182 61 234 / 25%);
-   
-
 }
 
 div.chat form {
     width: 100%;
     display: flex;
-  
-
 }
 
 div.chat input {
     border-radius: 3px;
     margin-right: 2px;
-
-
 }
 
 div.chat input.message {
     width: 100%;
     margin-left: 10px;
 }
-
-
-
 
 div.error {
     font-size: 0.8em;
@@ -180,6 +176,7 @@ nav form input.submit {
 :focus::-webkit-input-placeholder {
     border: none;
 }
+
 #logo{
     color: white;
     margin: 0;
@@ -188,19 +185,38 @@ nav form input.submit {
     margin-left: 1em;
 }
 
-
-.vbunce{
-     background-color: white;
+.vbunce {
+    max-width: 75%; 
+    margin: 5px 0;
+    padding: 10px 15px;
+    border-radius: 20px; 
+    background-color: #f1f1f1; 
     display: inline-block;
-     padding: 5px;
-     margin:  4px;
+    word-wrap: break-word; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    font-size: 16px; 
+    line-height: 1.5; 
 }
+
+.user_chat {
+    font-weight: bold;
+    display: block; 
+    margin-bottom: 5px;
+    font-size: 13px; 
+    color: #333; 
+}
+
+.vbunce p {
+    margin: 0;
+}
+
 .link {
     position: relative;
     display: inline-block;
     text-decoration: none;
     color: #fff;
 }
+
 .link::before,
 .link::after {
     content: '';
@@ -212,36 +228,23 @@ nav form input.submit {
     transform: scaleX(0);
     transition: transform 0.3s;
 }
+
 .link::before {
     top: -3px;
     transform-origin: left;
 }
+
 .link::after {
     bottom: -3px;
     transform-origin: right;
 }
+
 .link:hover::before,
 .link:hover::after,
 .active::before,
 .active::after {
     transform: scaleX(1);
 }
-
-/**/
-/*#chat-container {
-    margin: 25px;
-}
-
-#side-bar {
-    background: rgb(182 61 234 / 25%);
-    padding: 25px;
-}
-
-#chat-window {
-    border-radius: 0 10px 10px 0;
-    flex-grow: 1;
-}
-*/
 
 *::before,
 *::after {
@@ -250,14 +253,12 @@ nav form input.submit {
 	box-sizing: border-box;
 }
 
-
-
-
 .input {
 	position: relative;
-        margin-top: 30px;
-        margin-bottom: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
+
 .input__field {
 	padding: 10px;
 	
@@ -265,26 +266,26 @@ nav form input.submit {
 	font: inherit;
 	width: 94%;
 	border: 1px solid #ccc;
-	
 }
+
 .input__field_2 {
 	padding: 10px;
-	
 	border-radius: 10px;
 	font: inherit;
 	width: 94%;
 	border: 1px solid #ccc;
-	
 }
+
 .input__label {
 	position: absolute;
 	top: 0;
 	left: 0;
-        color:#ccc; 
+    color:#ccc; 
 	transform: translate(10px, 10px);
 	transform-origin: left;
 	transition: transform 0.25s;
 }
+
 .input__field:focus-visible ~ .input__label,
 .input__field:valid ~ .input__label {
 	transform: translate(0, -30px) scale(0.8);
@@ -294,6 +295,7 @@ nav form input.submit {
 .input__field:is(:focus-visible, :valid) {
 	outline-color: #ccc;
 }
+
 .input__field_2:focus-visible ~ .input__label,
 .input__field_2:valid ~ .input__label {
 	transform: translate(0, -30px) scale(0.8);
@@ -303,6 +305,7 @@ nav form input.submit {
 .input__field_2:is(:focus-visible, :valid) {
 	outline-color: #ccc;
 }
+
 .input__icon-wrapper {
 	position: absolute;
 	top: 50%;
@@ -310,10 +313,12 @@ nav form input.submit {
 	transform: translateY(-50%);
 	cursor: pointer;
 }
+
 .input__icon {
 	color: #999;
 	font-size: 24px;
 }
+
 .input__icon:hover {
 	color: #333;
 }
@@ -322,46 +327,39 @@ nav form input.submit {
     display: flex;
     flex-direction: row;
 }
-.group{
 
-   margin:3px;
-   padding: 5px;
-  text-align: center;
-  font-size: 1.1em;
-  
+.group{
+    margin:3px;
+    padding: 5px;
+    text-align: center;
+    font-size: 1.1em;
 }
+
 div.chaty {
 
     background-color: white;
     padding: 10px;
     color: #333;
-   
-  
 }
+
 a.chaty{
     list-style: none;
     text-decoration: none;
-    
 }
+
 div.chaty:hover{
     background-color: rgb(108 66 125 / 17%);
 }
+
 a.chaty:hover{
     color: white;
 }
-@media only screen and (max-width: 1024px){
 
+@media only screen and (max-width: 1024px){
      #chat_groups {
         display: flex;
-
     }
- 
     div.chat{
         flex: 1;
-
     }
-
-}
-.user_chat{
-   font-size: 13px;
 }

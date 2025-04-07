@@ -15,7 +15,6 @@ if (isset($_SESSION["username"])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,7 +84,7 @@ if (isset($_SESSION["username"])) {
     </style>
     <script>
         window.onload = function() {
-            // Define the list of commands
+            //Define the list of commands
             const commands = [
                 "getusermessages",
                 "deleteuserdescription",
@@ -108,26 +107,25 @@ if (isset($_SESSION["username"])) {
                 "deleteuserfromgroup"
             ];
 
-            // Get the command input field
+            //Get the command input field
             const commandInput = document.getElementById("command");
 
-            // Create a datalist element and set its ID
+            //Create a datalist element and set its ID
             const dataList = document.createElement("datalist");
             dataList.id = "commandList";
 
-            // Create option elements for each command and append them to the datalist
+            //Create option elements for each command and append them to the datalist
             commands.forEach((command) => {
                 const option = document.createElement("option");
                 option.value = command;
                 dataList.appendChild(option);
             });
 
-            // Append the datalist to the document
+            //Append the datalist to the document
             document.body.appendChild(dataList);
 
-            // Set the datalist attribute for the command input field
+            //Set the datalist attribute for the command input field
             commandInput.setAttribute("list", "commandList");
-
         };
     </script>
 </head>
@@ -168,6 +166,7 @@ if (isset($_SESSION["username"])) {
         $val2 = $_POST['val2'];
         $results = array();
         $singleLine = false;
+
         switch ($command) {
             case 'getusermessages':
                 $results = $database->admin_getUserMessages($adminN, $adminP, $val1, $val2);
